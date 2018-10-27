@@ -14,12 +14,12 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - element_none
+  - element_fire
+  - element_air
+  - element_water
+  - element_ice
+  - element_earth
   - 
   - 
   - 
