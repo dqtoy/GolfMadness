@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 174599840}
   - component: {fileID: 174599839}
   - component: {fileID: 174599838}
+  - component: {fileID: 174599844}
   m_Layer: 0
   m_Name: ElementalGiver
   m_TagString: Untagged
@@ -364,6 +365,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &174599844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 174599837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47b34a3f7831b4af38ca89de32f4e963, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _completion: 1
 --- !u!1001 &404313717
 Prefab:
   m_ObjectHideFlags: 0
@@ -447,6 +460,7 @@ GameObject:
   - component: {fileID: 420329142}
   - component: {fileID: 420329141}
   - component: {fileID: 420329140}
+  - component: {fileID: 420329146}
   m_Layer: 0
   m_Name: ElementalDestroy
   m_TagString: Untagged
@@ -545,6 +559,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 45, y: 90, z: 0}
+--- !u!114 &420329146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 420329139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48c869b90bdd04540a27abc6f2755f62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _completion: 0
 --- !u!1001 &538866607
 Prefab:
   m_ObjectHideFlags: 0
@@ -2083,6 +2109,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1858736357}
+  - component: {fileID: 1858736358}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -2128,6 +2155,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1858736358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1858736356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce87f423f57fc4b40a6a768fc68a62c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _missionsDescription:
+  - 
+  - 
+  - 
 --- !u!1001 &1869805977
 Prefab:
   m_ObjectHideFlags: 0

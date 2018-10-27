@@ -7,16 +7,24 @@
         <e p="Scripts" t="Include">
           <e p="Debug" t="Include">
             <e p="DebugBallController.cs" t="Include" />
+            <e p="ElementalDebug.cs" t="Include" />
+            <e p="ElementVisualController.cs" t="Include" />
           </e>
           <e p="Elements" t="Include">
             <e p="Collisionable.cs" t="Include" />
             <e p="Elemental.cs" t="Include" />
             <e p="ElementalAbsorber.cs" t="Include" />
-            <e p="ElementalDebug.cs" t="Include" />
             <e p="ElementalGiverByCollision.cs" t="Include" />
             <e p="ElementalReceiveDestroy.cs" t="Include" />
             <e p="ElementalStealer.cs" t="Include" />
-            <e p="ElementVisualController.cs" t="Include" />
+          </e>
+          <e p="Missions" t="Include">
+            <e p="DestroyObjective.cs" t="Include" />
+            <e p="EnterObjective.cs" t="Include" />
+            <e p="MissionsManager.cs" t="Include" />
+            <e p="MoveObjective.cs" t="Include" />
+            <e p="Objective.cs" t="Include" />
+            <e p="ObjectiveCollisionableContainer.cs" t="Include" />
           </e>
         </e>
       </e>

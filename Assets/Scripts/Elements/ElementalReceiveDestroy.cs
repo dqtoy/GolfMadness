@@ -8,6 +8,10 @@ public class ElementalReceiveDestroy : ElementalDebug
 {
     protected override void CollisionableCollisionEnter(Collision other)
     {
-        Destroy(gameObject);
+        var otherElemental = other.gameObject.GetComponent<Elemental>();
+        if (CurrentElement == Element.ANY || otherElemental.CurrentElement == CurrentElement)
+        {
+            Destroy(gameObject);
+        }
     }
 }

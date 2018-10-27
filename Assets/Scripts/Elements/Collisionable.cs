@@ -7,7 +7,7 @@ public class Collisionable : MonoBehaviour
 {
     private Collider _collider;
 
-    private Collider Collider
+    protected Collider Collider
     {
         get
         {

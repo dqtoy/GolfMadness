@@ -12,7 +12,8 @@ public class Elemental : Collisionable
         WATER,
         ICE,
         AIR,
-        EARTH
+        EARTH,
+        ANY
     }
 
     [SerializeField] private Element _element;
