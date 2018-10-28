@@ -9,9 +9,11 @@ public class TrajectoryLine : MonoBehaviour
         public Vector3 originPoint;
         public Vector3 endPoint;
         public Vector3 direction;
+        public float distance;
     }
 
-    public int TrajectoryRebounds = 3;
+    public float MaxLineLength = 10f;
+    public int MaxReboundTries = 5;
     public float CollisionHeight = 0.25f;
 
     [SerializeField] private BallMovement _ball;
@@ -77,27 +79,50 @@ public class TrajectoryLine : MonoBehaviour
         _trajectorySteps.Clear();
         
         var initialPoint = originPoint;
-        initialPoint.y = CollisionHeight;
-        
         var initialDirection = direction;
-        
-        for (int i = 0; i < TrajectoryRebounds; ++i)
+
+        float accumulatedDistance = 0f;
+
+        int numTries = 0;
+
+        while(accumulatedDistance < MaxLineLength && numTries < MaxReboundTries)
         {
+            ++numTries;
+            initialPoint.y = CollisionHeight;
+            initialDirection.y = 0f;
+
             RaycastHit hit = new RaycastHit();
             if (!GetReboundPosition(initialPoint, initialDirection, ref hit))
             {
+                numTries = 0;
                 break;
             }
 
+            //Debug.DrawLine(hit.point, (hit.point + Vector3.up*5f), Color.yellow);
+
             var trajectoryStep = new TrajectoryStepData();
             trajectoryStep.originPoint = initialPoint;
-            trajectoryStep.endPoint = hit.point;
-            trajectoryStep.direction = initialDirection; 
+            trajectoryStep.direction = initialDirection;
+
+            float reboundLength = Vector3.Distance(hit.point, initialPoint);
+
+            if((accumulatedDistance + reboundLength) > MaxLineLength)
+            {
+                reboundLength = MaxLineLength - accumulatedDistance;
+                accumulatedDistance = MaxLineLength;
+                trajectoryStep.endPoint = initialPoint + (initialDirection * reboundLength);
+                numTries = 0;
+            }
+            else
+            {
+                trajectoryStep.endPoint = hit.point;
+                accumulatedDistance += reboundLength;
+            }
+
             _trajectorySteps.Add(trajectoryStep);
 
-            initialDirection = Vector3.Reflect(initialDirection, hit.normal);
             initialPoint = hit.point;
-            initialPoint.y = CollisionHeight;
+            initialDirection = Vector3.Reflect(initialDirection, hit.normal);
         }
 
         DrawTrajectories();
@@ -105,20 +130,20 @@ public class TrajectoryLine : MonoBehaviour
 
     bool GetReboundPosition(Vector3 originPoint, Vector3 direction, ref RaycastHit hit)
     {
-        Debug.DrawRay(originPoint, direction * 20, Color.magenta);
+        //Debug.DrawRay(originPoint, direction * 20, Color.magenta);
         if (!Physics.Raycast(originPoint, direction, out hit, Mathf.Infinity, reboundLayerMask))
         {
             return false;
         }
 
-        Debug.DrawLine(originPoint, originPoint + Vector3.up * 10f, Color.green);
+        //Debug.DrawLine(originPoint, originPoint + Vector3.up * 10f, Color.green);
         return true;
     }
 
     void DrawTrajectories()
     {
         int index = 0;
-        _lineRenderer.numPositions = _trajectorySteps.Count * 2;
+        _lineRenderer.positionCount = _trajectorySteps.Count * 2;
         
         foreach (var trajectoryStep in _trajectorySteps)
         {
