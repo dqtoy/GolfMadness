@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class BallMovement : MonoBehaviour
 {
-    [SerializeField] private TrajectoryLine _trajectoryLine;
-    [SerializeField] float _shootPower;
-    
 
+    
+    /*
     private Rigidbody _rigidbody;
     
     void Start()
@@ -19,8 +18,8 @@ public class BallMovement : MonoBehaviour
     {
         UpdateInput();
     }
-
-
+    */
+    /*
     void UpdateInput()
     {
         if (Input.GetKeyUp(KeyCode.Space))
@@ -30,16 +29,5 @@ public class BallMovement : MonoBehaviour
 
     }
 
-    public void ResetToPosition(Vector3 pos)
-    {
-        _rigidbody.velocity = Vector3.zero;
-        _rigidbody.angularVelocity = Vector3.zero;
-        transform.position = pos;
-        
-    }
-
-    void Shoot()
-    {
-        _rigidbody.AddForce(_trajectoryLine.GetAimingDirection() * _shootPower, ForceMode.Impulse);
-    }
+    */
 }

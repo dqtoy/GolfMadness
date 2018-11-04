@@ -22,7 +22,7 @@ public class Game : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.R))
         {
-            _ball.ResetToPosition(_initialPosition.transform.position);
+            //_ball.ResetToPosition(_initialPosition.transform.position);
         }
 
     }

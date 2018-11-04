@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using TouchScript.Gestures;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,50 +16,92 @@ public class TrajectoryLine : MonoBehaviour
     public int MaxReboundTries = 5;
     public float CollisionHeight = 0.25f;
 
-    [SerializeField] private BallMovement _ball;
+    [SerializeField] private PlayerController _playerController;
     [SerializeField] private GameObject _startDummy;
     [SerializeField] private GameObject _endDummy;
-    [SerializeField] private LineRenderer _lineRenderer;
+    [SerializeField] private GameObject _arrowModel;
     [SerializeField] float _directionAngleIncrement;
-    
+    [SerializeField] float _maxVerticalSizeScreenPercentage;
+    [SerializeField] float _maxVerticalScale;
+
     List<TrajectoryStepData> _trajectorySteps = new List<TrajectoryStepData>();
 
     private int reboundLayerMask;
-    
-    
+
+    Vector2 _initialDragPosition;
+    Vector3 _initialPosition;
+    float _curPower;
+
+    public float Power { get { return _curPower; } }
+
     void Start()
     {
         reboundLayerMask = 1 << 9;
+        ResetRotation();
+        _initialPosition = transform.localPosition;
+        FinishAiming();
     }
 
-    
-    void Update()
+    public void StartNewAiming()
     {
-        UpdateInput();
+        gameObject.SetActive(true);
     }
 
-    void UpdateInput()
+    public void FinishAiming()
     {
-        if (Input.GetKey(KeyCode.LeftArrow))
+        gameObject.SetActive(false);
+    }
+
+    public void OnGestureStateChanged(Gesture sender)
+    {
+        switch(sender.State)
         {
-            MoveDirectionArrow(1f);
-        }
-        
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            MoveDirectionArrow(-1f);
-        }
+            case Gesture.GestureState.Began:
+                _initialDragPosition = sender.ScreenPosition;
+                break;
+            case Gesture.GestureState.Changed:
+                MoveDirectionArrow(sender.ScreenPosition - sender.PreviousScreenPosition);
+                UpdateArrowSize(sender.ScreenPosition);
+                break;
+            case Gesture.GestureState.Ended:
+            case Gesture.GestureState.Failed:
+            case Gesture.GestureState.Cancelled:
+                ResetRotation();
+                break;
 
-        ProjectNewTrajectory(transform.position, GetAimingDirection());
-
+        }
     }
-    
-    
-    void MoveDirectionArrow(float increment)
+
+    void UpdateArrowSize(Vector2 curPosition)
     {
-        increment *= _directionAngleIncrement;
-        
-        transform.RotateAround(_ball.transform.position, Vector3.up, increment);
+        float yDistance = curPosition.y - _initialDragPosition.y;
+        var verticalPercentage = yDistance / Display.main.renderingHeight;
+
+        bool validVerticalDirection = true;
+        if(verticalPercentage >= 0f)
+        {
+            validVerticalDirection = false;
+        }
+
+        verticalPercentage = Mathf.Abs(verticalPercentage);
+
+        verticalPercentage = Mathf.Clamp(verticalPercentage, 0f, _maxVerticalSizeScreenPercentage);
+        _curPower = (verticalPercentage / _maxVerticalSizeScreenPercentage);
+
+        if(!validVerticalDirection)
+        {
+            _arrowModel.transform.localScale = Vector3.one;
+            return;
+        }
+
+        var finalSize = verticalPercentage * _maxVerticalScale;
+        _arrowModel.transform.localScale = new Vector3(1f + finalSize, 1f + finalSize, 1 + finalSize);
+        //Debug.Log("DISTANCE " + verticalPercentage + "  SIZE " + verticalPercentage * _maxVerticalScale * -1f);
+    }
+
+    void MoveDirectionArrow(Vector2 deltaIncrement)
+    {
+        transform.localRotation *= Quaternion.Euler(0f, deltaIncrement.x * _directionAngleIncrement, 0f);
     }
 
     private Vector3 _originDirPos, _endDirPos;
@@ -73,83 +115,10 @@ public class TrajectoryLine : MonoBehaviour
         
         return (_originDirPos - _endDirPos).normalized;
     }
-    
-    public void ProjectNewTrajectory(Vector3 originPoint, Vector3 direction)
+
+    void ResetRotation()
     {
-        _trajectorySteps.Clear();
-        
-        var initialPoint = originPoint;
-        var initialDirection = direction;
-
-        float accumulatedDistance = 0f;
-
-        int numTries = 0;
-
-        while(accumulatedDistance < MaxLineLength && numTries < MaxReboundTries)
-        {
-            ++numTries;
-            initialPoint.y = CollisionHeight;
-            initialDirection.y = 0f;
-
-            RaycastHit hit = new RaycastHit();
-            if (!GetReboundPosition(initialPoint, initialDirection, ref hit))
-            {
-                numTries = 0;
-                break;
-            }
-
-            //Debug.DrawLine(hit.point, (hit.point + Vector3.up*5f), Color.yellow);
-
-            var trajectoryStep = new TrajectoryStepData();
-            trajectoryStep.originPoint = initialPoint;
-            trajectoryStep.direction = initialDirection;
-
-            float reboundLength = Vector3.Distance(hit.point, initialPoint);
-
-            if((accumulatedDistance + reboundLength) > MaxLineLength)
-            {
-                reboundLength = MaxLineLength - accumulatedDistance;
-                accumulatedDistance = MaxLineLength;
-                trajectoryStep.endPoint = initialPoint + (initialDirection * reboundLength);
-                numTries = 0;
-            }
-            else
-            {
-                trajectoryStep.endPoint = hit.point;
-                accumulatedDistance += reboundLength;
-            }
-
-            _trajectorySteps.Add(trajectoryStep);
-
-            initialPoint = hit.point;
-            initialDirection = Vector3.Reflect(initialDirection, hit.normal);
-        }
-
-        DrawTrajectories();
-    }
-
-    bool GetReboundPosition(Vector3 originPoint, Vector3 direction, ref RaycastHit hit)
-    {
-        //Debug.DrawRay(originPoint, direction * 20, Color.magenta);
-        if (!Physics.Raycast(originPoint, direction, out hit, Mathf.Infinity, reboundLayerMask))
-        {
-            return false;
-        }
-
-        //Debug.DrawLine(originPoint, originPoint + Vector3.up * 10f, Color.green);
-        return true;
-    }
-
-    void DrawTrajectories()
-    {
-        int index = 0;
-        _lineRenderer.positionCount = _trajectorySteps.Count * 2;
-        
-        foreach (var trajectoryStep in _trajectorySteps)
-        {
-            _lineRenderer.SetPosition(index, trajectoryStep.originPoint);
-            _lineRenderer.SetPosition(index + 1, trajectoryStep.endPoint);
-            index += 2;
-        }
+        transform.localPosition = _initialPosition;
+        transform.localRotation = Quaternion.identity;
     }
 }
