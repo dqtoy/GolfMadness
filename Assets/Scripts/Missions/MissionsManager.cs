@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class MissionsManager : MonoBehaviour
+public class MissionsManager
 {
     public enum ObjectiveType
     {
@@ -24,14 +24,7 @@ public class MissionsManager : MonoBehaviour
 
     private Dictionary<ObjectiveCompletion, List<Objective>> _dicObjectives;
 
-    //TEST PURPOSE
-    private void Start()
-    {
-        Init();
-    }
-
-
-    public void Init()
+    public void InitLevelObjectives()
     {
         _dicObjectives = new Dictionary<ObjectiveCompletion, List<Objective>>();
         _dicObjectives.Add(ObjectiveCompletion.MAIN, new List<Objective>());
@@ -39,12 +32,11 @@ public class MissionsManager : MonoBehaviour
         _dicObjectives.Add(ObjectiveCompletion.SECONDARY_2, new List<Objective>());
 
         
-        var objectivesInScene = FindObjectsOfType<Objective>();
+        var objectivesInScene = GameObject.FindObjectsOfType<Objective>();
 
         if (objectivesInScene.Length == 0)
         {
             Debug.Log("NO OBJECTIVES IN SCENE");
-            enabled = false;
             return;
         }
 

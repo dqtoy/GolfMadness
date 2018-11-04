@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: AtlasResources
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 1024
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 2
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 1024
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: e8fb1486fe7fd4333a6938c6fca09a1c, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: b3472da143f664dddbf47925c42f9f80, type: 3}
+  - {fileID: 21300000, guid: d1c65db1d1a2747a182897980e62d715, type: 3}
+  - {fileID: 21300000, guid: 4aeb7b232354d47d5a3390c036126239, type: 3}
+  - {fileID: 21300000, guid: d185edc4d69aa409d86d99090bbb8961, type: 3}
+  - {fileID: 21300000, guid: 1c26f6583f61945ccace7013379a26d3, type: 3}
+  - {fileID: 21300000, guid: 61c61599f93aa40cd8b079ac0c60ab68, type: 3}
+  - {fileID: 21300000, guid: 13a2f7eaf5abc4e3d808c102d17ef680, type: 3}
+  - {fileID: 21300000, guid: 0a2d89db1a5bd473a9d8f14ae6ab2a66, type: 3}
+  - {fileID: 21300000, guid: c506976cbca0a456bb2b0ef172a77c70, type: 3}
+  - {fileID: 21300000, guid: 9e76ad5ea7f2a4503a3f4994c7161fb0, type: 3}
+  - {fileID: 21300000, guid: 344103ff72e0e4613beac3fc61e5df0e, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - coin_icon
+  - hint_power_up_icon
+  - coin_icon_big
+  - super_hint_power_up_icon
+  - star_icon
+  - select_power_up_icon
+  - select_power_up_icon_big
+  - super_hint_power_up_icon_big
+  - star_icon_empty
+  - hint_power_up_icon_big
+  - Boost_Counter
+  m_Tag: AtlasResources
+  m_IsVariant: 0

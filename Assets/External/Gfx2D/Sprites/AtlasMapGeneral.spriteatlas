@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: AtlasMapGeneral
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 1024
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 2
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 1024
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: cb279cc2c02624462826f7ee3cade63a, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 45b48a104ac174dd09bf114966bf2e1d, type: 3}
+  - {fileID: 21300000, guid: 8c65bb507fdb44c1983397298dc12992, type: 3}
+  - {fileID: 21300000, guid: 37d62311419db4e919f58e31a12b80b0, type: 3}
+  - {fileID: 21300000, guid: bc7834415629248b7832e3ba0ca10e8f, type: 3}
+  - {fileID: 21300000, guid: df216061138c647528dda3f2c655c5fc, type: 3}
+  - {fileID: 21300000, guid: 2dae4c81159164dd3807b377df7065fd, type: 3}
+  - {fileID: 21300000, guid: 748522f1974984d28b9b66bf8c48dae6, type: 3}
+  - {fileID: 21300000, guid: d8a763f171bb441edb2bcd9599c5ab39, type: 3}
+  - {fileID: 21300000, guid: 8a015772b4cc247e88384c01a5cba693, type: 3}
+  - {fileID: 21300000, guid: c7312bf357d8248cd9f777557da2bfe7, type: 3}
+  - {fileID: 21300000, guid: c02338b5b2edc44bfae51ca5d653352d, type: 3}
+  - {fileID: 21300000, guid: 368f971614d224e0496c6ae7ecebe48a, type: 3}
+  - {fileID: 21300000, guid: 330f2da6b56e24a269283c3d1cad9d0f, type: 3}
+  - {fileID: 21300000, guid: 6ec724a759be94c74aef15788b4527bf, type: 3}
+  - {fileID: 21300000, guid: e657d918a0b214575894d04bf62c63c8, type: 3}
+  - {fileID: 21300000, guid: 96807b383342f4f6fbc6aeb7030dbc7b, type: 3}
+  - {fileID: 21300000, guid: b1ce304870cf34b948d5bc8fee31fbc1, type: 3}
+  - {fileID: 21300000, guid: 71ac3ac8020724a14b8f42beca95184b, type: 3}
+  - {fileID: 21300000, guid: a89c5f198f7c04f73b161a3710e6996e, type: 3}
+  - {fileID: 21300000, guid: d568ba3983bf8492487c452f3c61c00e, type: 3}
+  - {fileID: 21300000, guid: 70cd18a96b9d841ed95858f35e504e2a, type: 3}
+  - {fileID: 21300000, guid: c30f711a1009041b0b2b2ff016414ab3, type: 3}
+  - {fileID: 21300000, guid: a4b0c4aab506447bba221bea91033303, type: 3}
+  - {fileID: 21300000, guid: 8deb6eaa86afc47aa952db76b640e734, type: 3}
+  - {fileID: 21300000, guid: d26da22bd2b734df6b5a0b2d3f2d4db7, type: 3}
+  - {fileID: 21300000, guid: 297b494b1c7474bcb8706c6e1784865c, type: 3}
+  - {fileID: 21300000, guid: b56fd41cb297a46a387a19f7c9670460, type: 3}
+  - {fileID: 21300000, guid: c44652acbd26e4eebb9f7822e8cd0cca, type: 3}
+  - {fileID: 21300000, guid: 6f2c3b5eddb0a4a73905a914d19f7665, type: 3}
+  - {fileID: 21300000, guid: be0ced5e219ce482fb6c5e4b92e82ba1, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - world_map_info_background
+  - node_map_world_background
+  - node_map_world_background_mask
+  - WorldName_Background
+  - DailyPuzzle_Icon
+  - Ranking_icon
+  - NodeMap_Btn_LevelToDo
+  - NodeMap_Btn_Locked
+  - DailyPuzzle_Icon_Complete
+  - node_map_profile_background
+  - NodeMap_Btn_LevelGreyscale
+  - Stars_icon
+  - Notification_Red
+  - DailyPuzzle_Icon_Press
+  - reward_node_map
+  - NodeMap_Btn_LevelToDo_Press
+  - NodeMap_Point_Profile1
+  - NodeMap_Point_Mask
+  - Star_Off
+  - NodeMap_Btn_LevelComplete_Press
+  - InviteFriends_Icon
+  - StageScreen_Icon_Locked
+  - Ranking_icon_press
+  - NodeMap_Point
+  - NodeScreen_Btn_Center
+  - node_map_profile_background_mask
+  - NotificationIcon
+  - Cooming_Soon
+  - NodeMap_Btn_LevelComplete
+  - Star_On
+  m_Tag: AtlasMapGeneral
+  m_IsVariant: 0
