@@ -100,6 +100,7 @@ public class PlayerController : MonoBehaviour
     {
         StopAllForces();
         transform.position = pos;
+        transform.localRotation = Quaternion.Euler(Vector3.zero);
     }
 
     void StopAllForces()
