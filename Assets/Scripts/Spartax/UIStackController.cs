@@ -33,11 +33,11 @@ public class UIStackController : UniqueElement
 
     public void Pop(UIController screen)
     {
-        if (_popupList.Peek() == screen)
+        if (_popupList.Count > 0 && _popupList.Peek() == screen)
         {
             Pop(_popupList);
         }
-        else if(_screenList.Peek() == screen)
+        else if(_screenList.Count > 0 && _screenList.Peek() == screen)
         {
             Pop(_screenList);
         }

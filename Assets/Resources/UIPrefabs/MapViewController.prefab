@@ -648,6 +648,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b98556522bfa40c2a732f93b48f0882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _title: {fileID: 114143926951462902}
+  _stars:
+  - {fileID: 1991468148149068}
+  - {fileID: 1192118280263696}
+  - {fileID: 1800300332894376}
 --- !u!114 &114301502386152316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1120,7 +1125,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114721122577980336}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114284316930899644}
+        m_MethodName: OnPressOK
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114649482042936054
@@ -1753,7 +1769,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000016793529}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: -973.6836}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &224944581797448248

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainSceneController : UIController
 {
@@ -20,13 +21,19 @@ public class MainSceneController : UIController
             obj.transform.SetParent(_scrollContent.transform,false);
             obj.name = i.ToString();
            
-            
-            //TODO init with level data
+           obj.GetComponent<MainSceneCellController>().Init(listScenes[i], new List<bool>{false, false,false}, OnPressCell); 
         }
+        
+        _prefab.gameObject.SetActive(false);
     }
 
     void OnPressCell(LevelData levelToLoad)
     {
+        if (!string.IsNullOrEmpty(levelToLoad.Scene))
+        {
+            SceneManager.LoadScene(levelToLoad.Scene);
+        }
         
+        ServicesManager.Instance.UIStackController.Pop(this);
     }
 }
