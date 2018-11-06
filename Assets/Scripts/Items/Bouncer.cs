@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bouncer : MonoBehaviour {
+public class Bouncer : Elemental
+{
 
     [SerializeField] float Power;
     [SerializeField] float CollisionSize;
