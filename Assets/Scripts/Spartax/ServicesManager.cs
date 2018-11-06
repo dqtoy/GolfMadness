@@ -21,6 +21,7 @@ public class ServicesManager
     //Set logic services
     public MissionsManager MissionsManager { get; private set; }
     public LevelDataCollection LevelDataCollection { get; private set; }
+    public PlayerModel PlayerModel { get; private set; }
     
     //AutoSet of Mono services
     protected UIStackController _UIStackController;
@@ -42,6 +43,7 @@ public class ServicesManager
     {
         MissionsManager = new MissionsManager();
         LevelDataCollection = new LevelDataCollection();
+        PlayerModel = new PlayerModel(LevelDataCollection.LevelDataList.Count);
     }
 
     

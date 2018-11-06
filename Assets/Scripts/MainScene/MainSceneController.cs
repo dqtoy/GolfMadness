@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainSceneController : UIController
@@ -21,7 +18,8 @@ public class MainSceneController : UIController
             obj.transform.SetParent(_scrollContent.transform,false);
             obj.name = i.ToString();
            
-           obj.GetComponent<MainSceneCellController>().Init(listScenes[i], new List<bool>{false, false,false}, OnPressCell); 
+           obj.GetComponent<MainSceneCellController>().Init(listScenes[i], 
+               ServicesManager.Instance.PlayerModel.GetCurrentCompletedStarsFromLevel(i), OnPressCell); 
         }
         
         _prefab.gameObject.SetActive(false);
