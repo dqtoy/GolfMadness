@@ -74,29 +74,20 @@ public class TrajectoryLine : MonoBehaviour
 
     void UpdateArrowSize(Vector2 curPosition)
     {
-        float yDistance = curPosition.y - _initialDragPosition.y;
-        var verticalPercentage = yDistance / Display.main.renderingHeight;
+        float dragLength = Mathf.Abs(Vector2.Distance(curPosition, _initialDragPosition));
+        var verticalPercentage = dragLength / Display.main.renderingHeight;
 
-        bool validVerticalDirection = true;
-        if(verticalPercentage >= 0f)
-        {
-            validVerticalDirection = false;
-        }
+        Debug.Log("DRAG LENGTH " + dragLength);
 
         verticalPercentage = Mathf.Abs(verticalPercentage);
 
         verticalPercentage = Mathf.Clamp(verticalPercentage, 0f, _maxVerticalSizeScreenPercentage);
         _curPower = (verticalPercentage / _maxVerticalSizeScreenPercentage);
 
-        if(!validVerticalDirection)
-        {
-            _arrowModel.transform.localScale = Vector3.one;
-            return;
-        }
 
         var finalSize = verticalPercentage * _maxVerticalScale;
         _arrowModel.transform.localScale = new Vector3(1f + finalSize, 1f + finalSize, 1 + finalSize);
-        //Debug.Log("DISTANCE " + verticalPercentage + "  SIZE " + verticalPercentage * _maxVerticalScale * -1f);
+        Debug.Log("DISTANCE " + verticalPercentage + "  SIZE " + verticalPercentage * _maxVerticalScale * -1f);
     }
 
     void MoveDirectionArrow(Vector2 deltaIncrement)
