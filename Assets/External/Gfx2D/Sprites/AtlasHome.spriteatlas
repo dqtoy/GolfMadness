@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: AtlasHome
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 1024
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 2
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 1024
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: dd27e37c806d7435ea46b426bec56c81, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 2f3dc4d0709364da494ee01cff01e2c2, type: 3}
+  - {fileID: 21300000, guid: f00316e17e25b5e4ab46735589bc2ab3, type: 3}
+  - {fileID: 21300000, guid: 2580a36261ec159479f5c0d4da458ab8, type: 3}
+  - {fileID: 21300000, guid: 9a59aed2241997e4a80c3fffb3612ad4, type: 3}
+  - {fileID: 21300000, guid: 9404a6538f0a04857aca77776ba19637, type: 3}
+  - {fileID: 21300000, guid: 1aa18504e15e2436c8b528ac6f2dd19e, type: 3}
+  - {fileID: 21300000, guid: 2874f31442541084a96d0d900cab831a, type: 3}
+  - {fileID: 21300000, guid: 8339ca75494e0c343a0c5fab0f677bb8, type: 3}
+  - {fileID: 21300000, guid: 7b932ec5db9128242a00f7f8e9e1f4ce, type: 3}
+  - {fileID: 21300000, guid: 7d2238e58daec4b468183f293a932782, type: 3}
+  - {fileID: 21300000, guid: fbc93f8881ebfae4eb8feeba3d75a0dc, type: 3}
+  - {fileID: 21300000, guid: f9811ef8a94f89c4ca9c488918611f19, type: 3}
+  - {fileID: 21300000, guid: 04e57f4996c51488f9c470817418344b, type: 3}
+  - {fileID: 21300000, guid: 452b78d99c396424dbe0f04339c58e51, type: 3}
+  - {fileID: 21300000, guid: 213d9dab3583845438fb7cfe0e71ef21, type: 3}
+  - {fileID: 21300000, guid: 3d29b4bb5b328f144ac01f6c707d6529, type: 3}
+  - {fileID: 21300000, guid: d26a04fb290624ef7bbd4da56e219a3d, type: 3}
+  - {fileID: 21300000, guid: 785eaf2ce54c24835821ce76c0018cc3, type: 3}
+  - {fileID: 21300000, guid: db76fb9c099419846af1f1a91b4dbd03, type: 3}
+  - {fileID: 21300000, guid: b6343f1d9183845cf97e776a042677e3, type: 3}
+  - {fileID: 21300000, guid: 2648385e14933ff4e963ec6ea0f06b99, type: 3}
+  - {fileID: 21300000, guid: 04662c6fd3e334b50a0e73ad317c64eb, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Rounded_CTA
+  - logo_word_front
+  - logo_word_e
+  - logo_word_i
+  - facebook_button
+  - Main_Daily_bg
+  - logo_word_f
+  - logo_word_leaf_B
+  - logo_word_flower_A
+  - logo_word_l
+  - logo_word_leaf_E
+  - logo_word_back
+  - NotificationIcon
+  - logo_word_flower_C
+  - logo_word_leaf_C
+  - logo_word_leaf_D
+  - Logo
+  - Rounded_CTA_Press
+  - logo_word_flower_B
+  - Main_fb_connect
+  - logo_word_leaf_A
+  - mainscreen_01
+  m_Tag: AtlasHome
+  m_IsVariant: 0

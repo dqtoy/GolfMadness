@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: AtlasBoard
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 1024
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 2
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 1024
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 51cfff80e49ea494b8e8f75cb45e53d1, type: 3}
+    - {fileID: 102900000, guid: 474c0ad98370f4e1fbd342a42e052c19, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: f61cda407d72b466fb121fa327f43cc0, type: 3}
+  - {fileID: 21300000, guid: f78da590a6acf4aadb935477c68be1b0, type: 3}
+  - {fileID: 21300000, guid: df6bd1015140db944ae5d28f22432891, type: 3}
+  - {fileID: 21300000, guid: bc72c961745754038aedf8cc068a6387, type: 3}
+  - {fileID: 21300000, guid: 5f3f22a1f561e461ca0469894f480c6f, type: 3}
+  - {fileID: 21300000, guid: e5a93832b7bc84730bc4089edc47ac69, type: 3}
+  - {fileID: 21300000, guid: 462d0182530ab4a1db5a90b8e88924a8, type: 3}
+  - {fileID: 21300000, guid: 171794d2da3f64a6284a3b818c9f2bf1, type: 3}
+  - {fileID: 21300000, guid: 9b5642231aebe4cb39c24b2e6916d4d2, type: 3}
+  - {fileID: 21300000, guid: a0f23ce4a82494d4b84e9f61eae437c1, type: 3}
+  - {fileID: 21300000, guid: f946ef56073fb4e7a8323398e55fe823, type: 3}
+  - {fileID: 21300000, guid: b24d9437794984cec8f9f039b155e3bd, type: 3}
+  - {fileID: 21300000, guid: e9f5db47fa30e4bf4827977419c92dca, type: 3}
+  - {fileID: 21300000, guid: fb6941671148a44b0a1b398faa61f1a5, type: 3}
+  - {fileID: 21300000, guid: a3e04db777cb2472ba31b8cd25541367, type: 3}
+  - {fileID: 21300000, guid: b31b9cd7caa69411cba3657bdd5b6a98, type: 3}
+  - {fileID: 21300000, guid: 401b45397c6a6024e91554e83a3bb0d5, type: 3}
+  - {fileID: 21300000, guid: f52bcd3a04748465d80292043e0b0df7, type: 3}
+  - {fileID: 21300000, guid: 3b2956baa4bd4461cba43c86739f5a7a, type: 3}
+  - {fileID: 21300000, guid: 0dd59aca4c6d84817927d519bee1f6fc, type: 3}
+  - {fileID: 21300000, guid: cb51e23bbdc814a75b0041b66217dfe9, type: 3}
+  - {fileID: 21300000, guid: 524736abe6235409f8dd3bb1b9820ec4, type: 3}
+  - {fileID: 21300000, guid: c7db9d4cd5e254e67b9077b9472ac664, type: 3}
+  - {fileID: 21300000, guid: c7ac026ce189445bd9b8095f776ba33b, type: 3}
+  - {fileID: 21300000, guid: f0e1277cab95e4fa0a2b1632c6e9176a, type: 3}
+  - {fileID: 21300000, guid: 016603dc3d3b347fdb30e3cefbb1ea84, type: 3}
+  - {fileID: 21300000, guid: 4dfabf0d563f54ca7a6510bed295e63d, type: 3}
+  - {fileID: 21300000, guid: 65abb31d154c64cecbefd2da66432f80, type: 3}
+  - {fileID: 21300000, guid: b64c173dfa3b44c2ba241b735fbd9b4f, type: 3}
+  - {fileID: 21300000, guid: 78ad9b5df7d4f4a53b7bcb6c86eb7c60, type: 3}
+  - {fileID: 21300000, guid: 144b545e2ed1248fa9e0a19173ed0efa, type: 3}
+  - {fileID: 21300000, guid: 9390bddf0cf104c94806e15319daeb82, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - arrow_1
+  - refresh
+  - poison_icon_big
+  - rocket_icon_big
+  - wordpreview
+  - tile_filled
+  - mine_icon_big
+  - round_button
+  - star_widget_container
+  - bomb_counter
+  - videoads_button
+  - word_selected
+  - videoads_coins
+  - tutorial_hand
+  - tile_empty
+  - word_selector_background
+  - poisonB_icon_big
+  - endlevel_gift
+  - select_powerup_icon
+  - round_button_pressed
+  - sack_icon_big
+  - videoads_icon
+  - shuffle_icon
+  - badge_white
+  - rocket_icon_big_active
+  - daily_puzzle_icon
+  - each_word_powerup_icon
+  - bomb_icon_big
+  - message_background
+  - circle
+  - hint_icon
+  - arrow_2
+  m_Tag: AtlasBoard
+  m_IsVariant: 0

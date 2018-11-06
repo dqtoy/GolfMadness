@@ -11,6 +11,9 @@ public class DestroyObjective : Objective
 
     private void OnDestroy()
     {
-        OnObjectiveUpdated(true, this);
+        if (OnObjectiveUpdated != null)
+        {
+            OnObjectiveUpdated(true, this);
+        }
     }
 }

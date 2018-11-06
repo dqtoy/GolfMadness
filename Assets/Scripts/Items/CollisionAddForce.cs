@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollisionAddForce : MonoBehaviour {
-
+public class CollisionAddForce : Elemental
+{
     [SerializeField] float Power;
 
-    private void OnCollisionEnter(Collision collision)
+    protected override void CollisionableCollisionEnter(Collision collision)
     {
-        if(collision.contacts.Length == 0)
+        if (collision.contacts.Length == 0)
         {
             return;
         }

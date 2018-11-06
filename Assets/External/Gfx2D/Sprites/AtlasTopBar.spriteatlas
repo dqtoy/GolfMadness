@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: AtlasTopBar
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 2
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 1024
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 330c0d3b23f784b698d2362ddbeba732, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 46d28ab1d34144541bf938c2b8b2a3a4, type: 3}
+  - {fileID: 21300000, guid: fefea65202cd349e1ab449254591201a, type: 3}
+  - {fileID: 21300000, guid: 5992d4727155943a29a010d470928e4c, type: 3}
+  - {fileID: 21300000, guid: 043649d22e9434be89d69eded0d85603, type: 3}
+  - {fileID: 21300000, guid: c97dcba38040a473eb939112fd7c470e, type: 3}
+  - {fileID: 21300000, guid: 563e58f39f4ff4eef8c3a5836de1dd83, type: 3}
+  - {fileID: 21300000, guid: 23b9d444364994c19b9eceac9611db73, type: 3}
+  - {fileID: 21300000, guid: d08e3508c789f4adb8ec0288d4b53534, type: 3}
+  - {fileID: 21300000, guid: b7bdeae8db1c04d3cb87f87c7a170585, type: 3}
+  - {fileID: 21300000, guid: 7669176b02fa8434596ec249fff75d11, type: 3}
+  - {fileID: 21300000, guid: 4164a89bc1f604a0b9f9c3637c06f2af, type: 3}
+  - {fileID: 21300000, guid: 7f966f4c8262c427c9fda53bdd779ba0, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - settings
+  - coin_icon
+  - dictionary_icon
+  - bonus_words_badge_coins
+  - back_button_press
+  - TopBar_Row
+  - TopBar_Plus
+  - Slider_Mask
+  - bonus_words_top_icon
+  - back_button
+  - TopBar_Plus_Press
+  - travel_points_icon
+  m_Tag: AtlasTopBar
+  m_IsVariant: 0
