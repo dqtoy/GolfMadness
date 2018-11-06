@@ -45,3 +45,10 @@ TEMP_*.meta
 .idea
 Assets/Plugins/Editor/JetBrains
 Assets/Plugins/Editor/JetBrains.meta
+\.vs/GolfMadness/v15/Server/sqlite3/db\.lock
+
+\.vs/GolfMadness/v15/Server/sqlite3/storage\.ide
+
+\.vs/GolfMadness/v15/Server/sqlite3/storage\.ide-shm
+
+\.vs/GolfMadness/v15/Server/sqlite3/storage\.ide-wal
