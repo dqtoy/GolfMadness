@@ -9,39 +9,22 @@ public class UIStackController : UniqueElement
         POPUP
     }
     
-    public Stack<UIController> _screenList;
-    public Stack<UIController> _popupList;
+    public Stack<UIController> _screenList = new Stack<UIController>();
+    public Stack<UIController> _popupList = new Stack<UIController>();
 
     [SerializeField] private GameObject _screenParent;    
     [SerializeField] private GameObject _popupParent;
 
-
-    #region Popup methods
-
-    public UIController PushPopup(string path)
-    {
-        var screen = GetView(path);
-        PushPopup(screen);
-        return screen;
-    }
-
-    public void PushPopup(UIController screen)
-    {
-        Push(_popupList, screen);
-    }
-
-    #endregion
-
     #region Screen methods
 
-    public UIController PushScreen(string path)
+    public UIController Push(string path)
     {
         var screen = GetView(path);
-        PushScreen(screen);
+        Push(screen);
         return screen;
     }
 
-    public void PushScreen(UIController screen)
+    public void Push(UIController screen)
     {
         Push(_screenList, screen);
     }

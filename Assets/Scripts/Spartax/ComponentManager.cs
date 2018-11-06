@@ -1,16 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class ComponentManager : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
+public class SpartaxComponentManager : MonoBehaviour
+{
+    [HideInInspector]
+    public List<LogicComponent> LogicComponents;
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void Awake()
+    {
+        LogicComponents = new List<LogicComponent>(FindObjectsOfType<LogicComponent>());
+
+        for (int i = 0; i < LogicComponents.Count; i++)
+        {
+            LogicComponents[i].Initialize();
+        }
+    }
 }

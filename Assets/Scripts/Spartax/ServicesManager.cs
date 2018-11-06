@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ServiceManager
+public class ServicesManager
 {
-    private static ServiceManager _instance;
-    public static ServiceManager Instance
+    private static ServicesManager _instance;
+    public static ServicesManager Instance
     {
         get
         {
             if (_instance == null)
             {
-                _instance = new ServiceManager();
+                _instance = new ServicesManager();
             }
 
             return _instance;
@@ -20,6 +20,7 @@ public class ServiceManager
     
     //Set logic services
     public MissionsManager MissionsManager { get; private set; }
+    public LevelDataCollection LevelDataCollection { get; private set; }
     
     //AutoSet of Mono services
     protected UIStackController _UIStackController;
@@ -37,9 +38,10 @@ public class ServiceManager
         }
     }
 
-    protected ServiceManager()
+    protected ServicesManager()
     {
         MissionsManager = new MissionsManager();
+        LevelDataCollection = new LevelDataCollection();
     }
 
     
