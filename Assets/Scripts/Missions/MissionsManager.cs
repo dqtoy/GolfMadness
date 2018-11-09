@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class MissionsManager
+public class MissionsManager :MonoBehaviour
 {
     public enum ObjectiveType
     {
@@ -24,6 +24,11 @@ public class MissionsManager
 
     private Dictionary<ObjectiveCompletion, List<Objective>> _dicObjectives;
 
+    void Start()
+    {
+        InitLevelObjectives();
+    }
+    
     public void InitLevelObjectives()
     {
         _dicObjectives = new Dictionary<ObjectiveCompletion, List<Objective>>();
