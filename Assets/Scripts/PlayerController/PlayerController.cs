@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
 
     Vector3 _initialPosition;
 
+    GolfCameraController _cameraController;
+
     public float MinValidMovementSpeed { get { return _minValidSpeed; } }
 
     void Start()
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour
 
         // TODO Esto habra que llamarlo desde otro lado con alguna config probablemente
         Init();
+
     }
 
     #region StateMachine
@@ -76,8 +79,11 @@ public class PlayerController : MonoBehaviour
 
     public void Init()
     {
+
+        _cameraController = FindObjectOfType<GolfCameraController>();
         ResetToPosition(_initialPosition);
         _stateMachine.ChangeState(_waitForInputState);
+        _cameraController.SetInitialCamera();
     }
 
 	

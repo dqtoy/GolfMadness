@@ -32,6 +32,9 @@ public class TrajectoryLine : MonoBehaviour
     Vector3 _initialPosition;
     float _curPower;
 
+    Vector2 _onScreenInitialDirection;
+    float _initialYRotation;
+
     public float Power { get { return _curPower; } }
 
     void Start()
@@ -58,9 +61,10 @@ public class TrajectoryLine : MonoBehaviour
         {
             case Gesture.GestureState.Began:
                 _initialDragPosition = sender.ScreenPosition;
+                GetInitialDirectionOnScreenSpace();
                 break;
             case Gesture.GestureState.Changed:
-                MoveDirectionArrow(sender.ScreenPosition - sender.PreviousScreenPosition);
+                MoveDirectionArrow((_initialDragPosition - sender.ScreenPosition).normalized);
                 UpdateArrowSize(sender.ScreenPosition);
                 break;
             case Gesture.GestureState.Ended:
@@ -72,12 +76,21 @@ public class TrajectoryLine : MonoBehaviour
         }
     }
 
+    void GetInitialDirectionOnScreenSpace()
+    {
+        var startPoint = Camera.main.WorldToScreenPoint(_playerController.transform.position);
+        var endPoint = Camera.main.WorldToScreenPoint(_playerController.transform.position + _playerController.transform.forward * 5f);
+
+        _initialYRotation = _playerController.transform.localRotation.y;
+        _onScreenInitialDirection = (endPoint - startPoint).normalized;
+    }
+
     void UpdateArrowSize(Vector2 curPosition)
     {
         float dragLength = Mathf.Abs(Vector2.Distance(curPosition, _initialDragPosition));
         var verticalPercentage = dragLength / Display.main.renderingHeight;
 
-        Debug.Log("DRAG LENGTH " + dragLength);
+        //Debug.Log("DRAG LENGTH " + dragLength);
 
         verticalPercentage = Mathf.Abs(verticalPercentage);
 
@@ -87,12 +100,18 @@ public class TrajectoryLine : MonoBehaviour
 
         var finalSize = verticalPercentage * _maxVerticalScale;
         _arrowModel.transform.localScale = new Vector3(1f + finalSize, 1f + finalSize, 1 + finalSize);
-        Debug.Log("DISTANCE " + verticalPercentage + "  SIZE " + verticalPercentage * _maxVerticalScale * -1f);
+        //Debug.Log("DISTANCE " + verticalPercentage + "  SIZE " + verticalPercentage * _maxVerticalScale * -1f);
     }
 
-    void MoveDirectionArrow(Vector2 deltaIncrement)
+    void MoveDirectionArrow(Vector2 curDirection)
     {
-        transform.localRotation *= Quaternion.Euler(0f, deltaIncrement.x * _directionAngleIncrement, 0f);
+        var angles = Vector2.SignedAngle(curDirection, _onScreenInitialDirection);
+        var dotProduct = Vector2.Dot(curDirection, _onScreenInitialDirection);
+
+        //Debug.Log("ANGLE " + angles + "  DOT " + dotProduct);
+        
+        transform.localRotation = Quaternion.Euler(0f, _initialYRotation + angles, 0f);
+        //transform.localRotation *= Quaternion.Euler(0f, deltaIncrement.x * _directionAngleIncrement, 0f);
     }
 
     private Vector3 _originDirPos, _endDirPos;
