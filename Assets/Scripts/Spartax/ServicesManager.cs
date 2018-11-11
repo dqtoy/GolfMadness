@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ServicesManager
 {
+    public const string MainScene = "MainScene";
+    
     private static ServicesManager _instance;
     public static ServicesManager Instance
     {
@@ -46,6 +48,15 @@ public class ServicesManager
         PlayerModel = new PlayerModel(LevelDataCollection.LevelDataList.Count);
     }
 
-    
+    public LevelData CurrentLevel()
+    {
+        LevelData data = null;
+        if (LevelDataCollection.LevelDataList.Count > PlayerModel.LoadedLevelIndex)
+        {
+            data = LevelDataCollection.LevelDataList[PlayerModel.LoadedLevelIndex];
+        }
+
+        return data;
+    }
 
 }

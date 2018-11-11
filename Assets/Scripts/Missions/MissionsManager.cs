@@ -19,18 +19,20 @@ public class MissionsManager
         SECONDARY_1 = 1,
         SECONDARY_2 = 3
     }
-
-    [SerializeField] private List<string> _missionsDescription;
-
+    
     private Dictionary<ObjectiveCompletion, List<Objective>> _dicObjectives;
+    private Dictionary<ObjectiveCompletion, MissionUIController> _uiControllers;
+
+    private LevelData _levelData;
 
     public void InitLevelObjectives()
     {
+        _levelData = ServicesManager.Instance.CurrentLevel();
+        _uiControllers = new Dictionary<ObjectiveCompletion, MissionUIController>();
         _dicObjectives = new Dictionary<ObjectiveCompletion, List<Objective>>();
         _dicObjectives.Add(ObjectiveCompletion.MAIN, new List<Objective>());
         _dicObjectives.Add(ObjectiveCompletion.SECONDARY_1, new List<Objective>());
         _dicObjectives.Add(ObjectiveCompletion.SECONDARY_2, new List<Objective>());
-
         
         var objectivesInScene = GameObject.FindObjectsOfType<Objective>();
 
@@ -59,6 +61,7 @@ public class MissionsManager
     {
         var listObjectives = _dicObjectives[objective.Completion];
         bool objectiveInList = listObjectives.Contains(objective);
+        
         if (!completed && !objectiveInList)
         {
             Debug.Log("OBJECTIVE GAINED AGAIN: " + objective.Type.ToString() + "   " + objective.Completion.ToString());
@@ -77,6 +80,8 @@ public class MissionsManager
         {
             Debug.Log("NOTHING HAPPENS: " + objective.Type.ToString() + "   " + objective.Completion.ToString());
         }
+        
+        TryUpdateUI(objective.Completion, listObjectives.Count == 0);
     }
 
     void LevelPassed()
@@ -87,5 +92,33 @@ public class MissionsManager
         log += "\tSECONDARY2 OBJECTIVES REMAINING " + _dicObjectives[ObjectiveCompletion.SECONDARY_2].Count ;
 
         Debug.Log(log);
+    }
+
+    void TryUpdateUI(ObjectiveCompletion obj, bool completed)
+    {
+        if (_uiControllers.ContainsKey(obj))
+        {
+            _uiControllers[obj].UpdateState(completed);
+        }
+    }
+
+    public void InitUI(List<MissionUIController> listUIController)
+    {
+        _uiControllers.Add(ObjectiveCompletion.MAIN, listUIController[0]);  
+        _uiControllers.Add(ObjectiveCompletion.SECONDARY_1, listUIController[1]);
+        _uiControllers.Add(ObjectiveCompletion.SECONDARY_2, listUIController[2]);
+        
+        _uiControllers[ObjectiveCompletion.MAIN].Init(
+            _dicObjectives[ObjectiveCompletion.MAIN].Count > 0,
+            _levelData.MainMissionDescription);
+        
+        _uiControllers[ObjectiveCompletion.SECONDARY_1].Init(
+            _dicObjectives[ObjectiveCompletion.SECONDARY_1].Count > 0,
+            _levelData.MainMissionDescription);
+        
+        _uiControllers[ObjectiveCompletion.SECONDARY_2].Init(
+            _dicObjectives[ObjectiveCompletion.SECONDARY_2].Count > 0,
+            _levelData.MainMissionDescription);
+
     }
 }

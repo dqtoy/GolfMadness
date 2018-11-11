@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class SpartaxComponentManager : MonoBehaviour
+public class ComponentManager : MonoBehaviour
 {
     [HideInInspector]
     public List<LogicComponent> LogicComponents;
 	
     void Awake()
     {
-        LogicComponents = new List<LogicComponent>(FindObjectsOfType<LogicComponent>());
+        LogicComponents = new List<LogicComponent>(GetComponents<LogicComponent>());
 
         for (int i = 0; i < LogicComponents.Count; i++)
         {
