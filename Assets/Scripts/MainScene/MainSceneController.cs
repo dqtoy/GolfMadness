@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainSceneController : UIController
@@ -10,7 +7,7 @@ public class MainSceneController : UIController
 
     [SerializeField] private MainSceneCellController _prefab;
     [SerializeField] private RectTransform _scrollContent;
-    
+
     public override void OnAppeared()
     {
         var listScenes = ServicesManager.Instance.LevelDataCollection.LevelDataList;
@@ -18,12 +15,13 @@ public class MainSceneController : UIController
         for (int i = 0; i < listScenes.Count; i++)
         {
             var obj = Instantiate(_prefab.gameObject);
-            obj.transform.SetParent(_scrollContent.transform,false);
+            obj.transform.SetParent(_scrollContent.transform, false);
             obj.name = i.ToString();
-           
-           obj.GetComponent<MainSceneCellController>().Init(listScenes[i], new List<bool>{false, false,false}, OnPressCell); 
+            listScenes[i].Index = i;
+            obj.GetComponent<MainSceneCellController>().Init(listScenes[i],
+                ServicesManager.Instance.PlayerModel.GetCurrentCompletedStarsFromLevel(i), OnPressCell);
         }
-        
+
         _prefab.gameObject.SetActive(false);
     }
 
@@ -33,7 +31,8 @@ public class MainSceneController : UIController
         {
             SceneManager.LoadScene(levelToLoad.Scene);
         }
-        
+
+        ServicesManager.Instance.PlayerModel.LoadedLevelIndex = levelToLoad.Index;
         ServicesManager.Instance.UIStackController.Pop(this);
     }
 }

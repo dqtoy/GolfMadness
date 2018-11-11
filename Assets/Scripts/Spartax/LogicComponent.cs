@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(SpartaxComponentManager))]
+[RequireComponent(typeof(ComponentManager))]
 public class LogicComponent : MonoBehaviour
 {
     public virtual void Initialize()
