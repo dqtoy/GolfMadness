@@ -9,9 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62a8be64aca974abca85db63b21cefd2, type: 3}
-  m_Name: LevelData_1
+  m_Name: LevelData_1_v1
   m_EditorClassIdentifier: 
+  LevelId: 1
   Order: 0
+  Index: 0
+  AmountOfTries: 0
   Title: FIRST LEVEL
   MainMissionDescription: 
   SecondaryMissionDescription: 

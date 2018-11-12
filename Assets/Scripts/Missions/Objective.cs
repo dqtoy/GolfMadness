@@ -3,14 +3,16 @@ using UnityEngine;
 
 public class Objective : Collisionable
 {
-    [SerializeField] private string MissionId;
+    public string MissionId;
     [SerializeField] private MissionsManager.ObjectiveCompletion _completion;
 
     public Action<bool, Objective> OnObjectiveUpdated;
 
     public bool IsInCurrentMission()
     {
-        bool objectiveInCurrentMission = ServicesManager.Instance.CurrentLevel().LevelId == MissionId;
+        bool objectiveInCurrentMission = string.IsNullOrEmpty(MissionId);
+        objectiveInCurrentMission |= string.IsNullOrEmpty(ServicesManager.Instance.CurrentLevel().LevelId);
+        objectiveInCurrentMission |= ServicesManager.Instance.CurrentLevel().LevelId == MissionId;
         enabled = objectiveInCurrentMission;
         return objectiveInCurrentMission;
     }
@@ -19,7 +21,7 @@ public class Objective : Collisionable
     {
         get { return MissionsManager.ObjectiveType.NONE; }
     }
-    
+
     public MissionsManager.ObjectiveCompletion Completion
     {
         get { return _completion; }

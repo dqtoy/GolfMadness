@@ -100,8 +100,6 @@ public class MissionsManager :MonoBehaviour
 
     void LevelPassed()
     {
-        //TODO: show end level popup
-
         var completedList = new List<bool>()
         {
             _dicObjectives[ObjectiveCompletion.MAIN].Count == 0,
