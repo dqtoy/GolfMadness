@@ -20,7 +20,16 @@ public class PlayerModel
 
 	public void SetLevelStars(List<bool> completed)
 	{
-		_completedStars[LoadedLevelIndex] = new List<bool>(completed);
+		if (_completedStars[LoadedLevelIndex] == null)
+		{
+			_completedStars[LoadedLevelIndex] = new List<bool>(completed);
+		}
+		else
+		{
+			_completedStars[LoadedLevelIndex][0] |= completed[0];
+			_completedStars[LoadedLevelIndex][1] |= completed[1];
+			_completedStars[LoadedLevelIndex][2] |= completed[2];
+		}
 	}
 
 	public List<bool> GetCurrentCompletedStarsFromLevel(int index)

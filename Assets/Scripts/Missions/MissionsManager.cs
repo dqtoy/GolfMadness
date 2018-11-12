@@ -57,6 +57,12 @@ public class MissionsManager :MonoBehaviour
                 continue;
             }
 
+            if (!objective.IsInCurrentMission())
+            {
+                Debug.Log("Objective not in current mission ", objective);
+                continue;
+            }
+
             objective.OnObjectiveUpdated = OnObjectiveUpdated;
             _dicObjectives[objective.Completion].Add(objective);
         }
@@ -91,6 +97,18 @@ public class MissionsManager :MonoBehaviour
 
     void LevelPassed()
     {
+        //TODO: show end level popup
+
+        var completedList = new List<bool>()
+        {
+            _dicObjectives[ObjectiveCompletion.MAIN].Count == 0,
+            _dicObjectives[ObjectiveCompletion.SECONDARY_1].Count == 0,
+            _dicObjectives[ObjectiveCompletion.SECONDARY_2].Count == 0
+        };
+        ServicesManager.Instance.PlayerModel.SetLevelStars(completedList);
+        
+        
+        //TODO: remove 
         string log = "LEVEL PASSED!\n";
         log += "\tMAIN OBJECTIVES REMAINING " + _dicObjectives[ObjectiveCompletion.MAIN].Count + "\n";
         log += "\tSECONDARY1 OBJECTIVES REMAINING " + _dicObjectives[ObjectiveCompletion.SECONDARY_1].Count + "\n";
@@ -119,11 +137,11 @@ public class MissionsManager :MonoBehaviour
         
         _uiControllers[ObjectiveCompletion.SECONDARY_1].Init(
             _dicObjectives[ObjectiveCompletion.SECONDARY_1].Count > 0,
-            _levelData.MainMissionDescription);
+            _levelData.SecondaryMissionDescription);
         
         _uiControllers[ObjectiveCompletion.SECONDARY_2].Init(
             _dicObjectives[ObjectiveCompletion.SECONDARY_2].Count > 0,
-            _levelData.MainMissionDescription);
+            _levelData.ThirdMissionDescription);
 
     }
 }
