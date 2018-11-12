@@ -8,28 +8,41 @@ public class UIStackController : UniqueElement
         SCREEN,
         POPUP
     }
-    
-    public Stack<UIController> _screenList = new Stack<UIController>();
-    public Stack<UIController> _popupList = new Stack<UIController>();
 
-    [SerializeField] private GameObject _screenParent;    
+    Stack<UIController> _screenList = new Stack<UIController>();
+    Stack<UIController> _popupList = new Stack<UIController>();
+
+    [SerializeField] private GameObject _screenParent;
     [SerializeField] private GameObject _popupParent;
 
     #region Screen methods
 
-    public UIController Push(string path)
-    {
-        var screen = GetView(path);
-        Push(screen);
-        return screen;
-    }
-
     public void Push(UIController screen)
     {
-        Push(_screenList, screen);
+        if (screen.Type == Type.POPUP)
+        {
+            Push(_popupList, screen);
+        }
+        else
+        {
+            Push(_screenList, screen);
+        }
     }
 
     #endregion
+
+    public void PopAll()
+    {
+        while (_popupList.Count > 0)
+        {
+            Pop(_popupList.Peek());
+        }
+        
+        while (_screenList.Count > 0)
+        {
+            Pop(_screenList.Peek());
+        }
+    }
 
     public void Pop(UIController screen)
     {
@@ -37,7 +50,7 @@ public class UIStackController : UniqueElement
         {
             Pop(_popupList);
         }
-        else if(_screenList.Count > 0 && _screenList.Peek() == screen)
+        else if (_screenList.Count > 0 && _screenList.Peek() == screen)
         {
             Pop(_screenList);
         }
@@ -63,7 +76,14 @@ public class UIStackController : UniqueElement
         screen.gameObject.SetActive(true);
         screen.OnAppeared();
     }
-    
+
+    public UIController Push(string path)
+    {
+        UIController controller = GetView(path);
+        Push(controller);
+        return controller;
+    }
+
     public UIController GetView(string path)
     {
         var screen = Resources.Load<GameObject>(path);

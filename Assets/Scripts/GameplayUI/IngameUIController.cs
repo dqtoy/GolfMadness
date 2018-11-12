@@ -28,9 +28,6 @@ public class IngameUIController : UIController
 
     public void OnPressBack()
     {
-        //TODO. show pause popup
-        
-        SceneManager.LoadScene(ServicesManager.MainScene);
-        ServicesManager.Instance.UIStackController.Pop(this);
+        ServicesManager.Instance.UIStackController.Push("UIPrefabs/PausePopup");
     }
 }

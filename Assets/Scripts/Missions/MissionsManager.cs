@@ -25,13 +25,11 @@ public class MissionsManager :MonoBehaviour
 
     private LevelData _levelData;
 
-    void Start()
-    {
-        InitLevelObjectives();
-    }
+    public bool MissionsActive;
     
     public void InitLevelObjectives()
     {
+        MissionsActive = true;
         _levelData = ServicesManager.Instance.CurrentLevel();
         _uiControllers = new Dictionary<ObjectiveCompletion, MissionUIController>();
         _dicObjectives = new Dictionary<ObjectiveCompletion, List<Objective>>();
@@ -70,6 +68,11 @@ public class MissionsManager :MonoBehaviour
 
     void OnObjectiveUpdated(bool completed, Objective objective)
     {
+        if (!MissionsActive)
+        {
+            return;
+        }
+
         var listObjectives = _dicObjectives[objective.Completion];
         bool objectiveInList = listObjectives.Contains(objective);
         
@@ -106,7 +109,8 @@ public class MissionsManager :MonoBehaviour
             _dicObjectives[ObjectiveCompletion.SECONDARY_2].Count == 0
         };
         ServicesManager.Instance.PlayerModel.SetLevelStars(completedList);
-        
+        ServicesManager.Instance.UIStackController.Push("UIPrefabs/CompletedLevelPopup");
+
         
         //TODO: remove 
         string log = "LEVEL PASSED!\n";
