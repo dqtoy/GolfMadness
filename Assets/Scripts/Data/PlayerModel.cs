@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerModel
 {
-	public int LoadedLevelIndex;
+	public int LoadedLevelIndex = -1;
 
 	private Dictionary<int, List<bool>> _completedStars;
 

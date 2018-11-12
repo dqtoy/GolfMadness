@@ -3,7 +3,7 @@ using TouchScript.Gestures;
 
 public class GolfCameraController : MonoBehaviour
 {
-    [SerializeField] GameObject Target;
+    public GameObject Target;
     [SerializeField] Vector3 TargetPositionOffset;
     [SerializeField] Vector3 CameraPositionOffset;
 

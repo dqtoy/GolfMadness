@@ -437,7 +437,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd90a8856e1a49eba25728d5aaac9f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMode: 0
   OnStateChange:
     m_PersistentCalls:
       m_Calls:
@@ -538,6 +537,7 @@ MonoBehaviour:
   _minShootPower: 2
   _maxShootPower: 30
   _minValidSpeed: 0.63
+  InitialPosition: {fileID: 0}
 --- !u!120 &120609832248958790
 LineRenderer:
   m_ObjectHideFlags: 1

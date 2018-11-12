@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1218525954087926}
+  m_IsPrefabAsset: 1
+--- !u!1 &1218525954087926
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4257465772125698}
+  - component: {fileID: 114433632464180178}
+  - component: {fileID: 114380858415395582}
+  - component: {fileID: 114726524210115740}
+  - component: {fileID: 114376188542408016}
+  - component: {fileID: 114817774446781966}
+  - component: {fileID: 114274403230894040}
+  m_Layer: 0
+  m_Name: '[DONT DESTROY THIS] Initializer'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4257465772125698
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218525954087926}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 91.12715, y: 266.9221, z: 0.23418851}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114274403230894040
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218525954087926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779f7c5cdc65a48f48bb6fa477587ca1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PrefabPath: UIPrefabs/InGameUI
+--- !u!114 &114376188542408016
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218525954087926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40ea55a8b378146a18ef892de8229d1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerBall: {fileID: 1752025744826850, guid: 28c70803f32b64e5db527ec6d5be2f28,
+    type: 2}
+  _camera: {fileID: 1846451165462684, guid: 760d62b3754debb45af6f29012b7fad6, type: 2}
+  _touchManager: {fileID: 100002, guid: 1c4dd8a13f501b04f84fe824120f70bb, type: 2}
+  _touchPlane: {fileID: 1955551786246702, guid: ac4c4d41507cf4ee5aff052ca17c7151,
+    type: 2}
+  _playerSpawnPosition: {fileID: 0}
+--- !u!114 &114380858415395582
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218525954087926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b289326c5f3384cb4811626339b35c75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _path: GUI_Root
+  _parent: {fileID: 0}
+--- !u!114 &114433632464180178
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218525954087926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5600beb3ce4304c478290059bf7a8e79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LogicComponents: []
+--- !u!114 &114726524210115740
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218525954087926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edefbae6ee26412f803d18f675a77c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _levelData: {fileID: 11400000, guid: 3abfc6a5d91ea46308ad3397963891fb, type: 2}
+--- !u!114 &114817774446781966
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218525954087926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84d2cb9e9f3394803870df281b13980f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

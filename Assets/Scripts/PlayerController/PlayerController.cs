@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     WaitForInput _waitForInputState;
     InPlayerMovementState _inMovementState;
 
-    Vector3 _initialPosition;
+    public Transform InitialPosition;
 
     GolfCameraController _cameraController;
 
@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _initialPosition = transform.position;
 
         SetupStateMachine();
         SetupGestures();
@@ -81,7 +80,7 @@ public class PlayerController : MonoBehaviour
     {
 
         _cameraController = FindObjectOfType<GolfCameraController>();
-        ResetToPosition(_initialPosition);
+        ResetToPosition(InitialPosition.position);
         _stateMachine.ChangeState(_waitForInputState);
         _cameraController.SetInitialCamera();
     }

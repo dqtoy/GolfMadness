@@ -21,6 +21,21 @@ public class LevelDataCollection
 		LevelDataList.Sort(SortByOrder);
 	}
 
+	public int GetIndex(LevelData data)
+	{
+		int index = 0;
+		for (int i = 0; i < LevelDataList.Count; i++)
+		{
+			if (LevelDataList[i] == data)
+			{
+				index = i;
+				break;
+			}
+		}
+
+		return index;
+	}
+
 	static int SortByOrder(LevelData a, LevelData b)
 	{
 		return (a.Order <= b.Order) ? -1 : 1;
