@@ -6,7 +6,7 @@ PhysicMaterial:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Bouncy
-  dynamicFriction: 0.3
+  dynamicFriction: 100
   staticFriction: 0.3
   bounciness: 0.79
   frictionCombine: 0

@@ -7,7 +7,7 @@ public class InPlayerMovementState : IState
     PlayerController _playerController;
     Rigidbody _playerRigidbody;
 
-    int _ticksWithSpeedZero;
+    float _timeWithSpeedZero;
 
     public InPlayerMovementState(PlayerController playerController)
     {
@@ -17,7 +17,7 @@ public class InPlayerMovementState : IState
 
     public void Enter()
     {
-        _ticksWithSpeedZero = 0;
+        _timeWithSpeedZero = 0f;
     }
 
     public void Execute()
@@ -25,9 +25,9 @@ public class InPlayerMovementState : IState
         //Debug.Log("SPEED MAGNITUDE " + _playerRigidbody.velocity.magnitude);
         if(_playerRigidbody.velocity.magnitude <= _playerController.MinValidMovementSpeed)
         {
-            ++_ticksWithSpeedZero;
+            _timeWithSpeedZero += Time.deltaTime;
 
-            if (_ticksWithSpeedZero > 3)
+            if (_timeWithSpeedZero > 1f)
             {
                 _playerController.PlayerStopMoving();
             }

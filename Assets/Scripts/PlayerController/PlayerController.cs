@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
 
     public float MinValidMovementSpeed { get { return _minValidSpeed; } }
 
+    public float MinValidAngularSpeed { get { return _minValidSpeed; } }
+
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -34,7 +36,6 @@ public class PlayerController : MonoBehaviour
 
         // TODO Esto habra que llamarlo desde otro lado con alguna config probablemente
         Init();
-
     }
 
     #region StateMachine
@@ -78,7 +79,6 @@ public class PlayerController : MonoBehaviour
 
     public void Init()
     {
-
         _cameraController = FindObjectOfType<GolfCameraController>();
         ResetToPosition(InitialPosition.position);
         _stateMachine.ChangeState(_waitForInputState);
@@ -116,9 +116,12 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
+        _rigidbody.maxAngularVelocity = _maxShootPower * 100f;
         var shootPower = _minShootPower + ((_maxShootPower - _minShootPower) * _trajectoryLine.Power);
         Debug.Log("SHOOT POWER " + _trajectoryLine.Power + "   FINAL " + shootPower);
-        _rigidbody.AddForce(_trajectoryLine.GetAimingDirection() * shootPower, ForceMode.Impulse);
+
+        var rotatingAxis = Vector3.Cross(Vector3.up, _trajectoryLine.GetAimingDirection());
+        _rigidbody.angularVelocity = rotatingAxis * shootPower;
     }
 
     public TrajectoryLine GetTrajectoryLine()
@@ -130,6 +133,4 @@ public class PlayerController : MonoBehaviour
     {
         return _rigidbody;
     }
-
-
 }
