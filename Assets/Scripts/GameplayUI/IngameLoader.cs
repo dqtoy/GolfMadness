@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TouchScript.Gestures;
 using UnityEngine;
 
 public class IngameLoader : LogicComponent
@@ -8,10 +9,9 @@ public class IngameLoader : LogicComponent
     [SerializeField] private GameObject _camera;
     [SerializeField] private GameObject _touchManager;
     [SerializeField] private GameObject _touchPlane;
-    
-    [Header("Utils")]
-    [SerializeField] private GameObject _playerSpawnPosition;
-    
+
+    [Header("Utils")] [SerializeField] private GameObject _playerSpawnPosition;
+
     public override void Initialize()
     {
         if (_playerSpawnPosition == null)
@@ -23,9 +23,11 @@ public class IngameLoader : LogicComponent
         var playerObject = Instantiate(_playerBall);
         playerObject.GetComponent<PlayerController>().InitialPosition = _playerSpawnPosition.transform;
         var cameraObject = Instantiate(_camera);
-        cameraObject.GetComponent<GolfCameraController>().Target = playerObject;
+        var cameraController = cameraObject.GetComponent<GolfCameraController>();
+        cameraController.Target = playerObject;
         Instantiate(_touchManager);
         Instantiate(_touchPlane);
+        var metaGesture = _touchPlane.GetComponent<MetaGesture>();
+        metaGesture.OnStateChange.AddListener(cameraController.OnGestureStateChanged);
     }
-
 }
