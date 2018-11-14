@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
 
         _cameraController = FindObjectOfType<GolfCameraController>();
         ResetToPosition(InitialPosition.position);
+        ResetRotation(InitialPosition.rotation);
         _stateMachine.ChangeState(_waitForInputState);
         _cameraController.SetInitialCamera();
     }
@@ -105,7 +106,11 @@ public class PlayerController : MonoBehaviour
     {
         StopAllForces();
         transform.position = pos;
-        transform.localRotation = Quaternion.Euler(Vector3.zero);
+    }
+
+    public void ResetRotation(Quaternion rotation)
+    {
+        transform.localRotation = rotation;
     }
 
     void StopAllForces()
