@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ServicesManager
 {
@@ -24,6 +25,7 @@ public class ServicesManager
     public MissionsManager MissionsManager { get; private set; }
     public LevelDataCollection LevelDataCollection { get; private set; }
     public PlayerModel PlayerModel { get; private set; }
+    public TriesManager TriesManager { get; private set; }
     
     //AutoSet of Mono services
     protected UIStackController _UIStackController;
@@ -46,6 +48,7 @@ public class ServicesManager
         MissionsManager = new MissionsManager();
         LevelDataCollection = new LevelDataCollection();
         PlayerModel = new PlayerModel(LevelDataCollection.LevelDataList.Count);
+        TriesManager = new TriesManager();
     }
 
     public LevelData CurrentLevel()
@@ -59,4 +62,17 @@ public class ServicesManager
         return data;
     }
 
+    public void GoToMainScene()
+    {
+        MissionsManager.MissionsActive = false;
+        UIStackController.PopAll();
+        SceneManager.LoadScene(MainScene);
+    }
+
+    public void ReloadCurrentLevel()
+    {
+        MissionsManager.MissionsActive = false;
+        UIStackController.PopAll();
+        SceneManager.LoadScene(CurrentLevel().Scene);
+    }
 }

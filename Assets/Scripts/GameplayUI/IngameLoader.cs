@@ -21,13 +21,19 @@ public class IngameLoader : LogicComponent
         }
 
         var playerObject = Instantiate(_playerBall);
-        playerObject.GetComponent<PlayerController>().InitialPosition = _playerSpawnPosition.transform;
+        var playerController = playerObject.GetComponent<PlayerController>();
+        playerController.InitialPosition = _playerSpawnPosition.transform;
+        
         var cameraObject = Instantiate(_camera);
         var cameraController = cameraObject.GetComponent<GolfCameraController>();
         cameraController.Target = playerObject;
+        
         Instantiate(_touchManager);
         Instantiate(_touchPlane);
         var metaGesture = _touchPlane.GetComponent<MetaGesture>();
         metaGesture.OnStateChange.AddListener(cameraController.OnGestureStateChanged);
+        
+        
+        playerController.Init();
     }
 }

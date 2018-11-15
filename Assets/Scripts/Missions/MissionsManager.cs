@@ -108,7 +108,6 @@ public class MissionsManager :MonoBehaviour
         };
         ServicesManager.Instance.PlayerModel.SetLevelStars(completedList);
         ServicesManager.Instance.UIStackController.Push("UIPrefabs/CompletedLevelPopup");
-
         
         //TODO: remove 
         string log = "LEVEL PASSED!\n";
@@ -145,5 +144,10 @@ public class MissionsManager :MonoBehaviour
             _dicObjectives[ObjectiveCompletion.SECONDARY_2].Count > 0,
             _levelData.ThirdMissionDescription);
 
+    }
+
+    private void OnDestroy()
+    {
+        MissionsActive = false;
     }
 }

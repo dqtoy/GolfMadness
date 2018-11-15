@@ -4,6 +4,15 @@ using TouchScript.Gestures;
 
 public class PlayerController : MonoBehaviour
 {
+    private static PlayerController _instance;
+    public static PlayerController Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+    
     [SerializeField] private TrajectoryLine _trajectoryLine;
     [SerializeField] float _minShootPower;
     [SerializeField] float _maxShootPower;
@@ -21,21 +30,12 @@ public class PlayerController : MonoBehaviour
 
     public Transform InitialPosition;
 
+    public delegate void OnShootDelegate();
+    public event OnShootDelegate OnShoot;
+
     GolfCameraController _cameraController;
 
     public float MinValidMovementSpeed { get { return _minValidSpeed; } }
-
-    void Start()
-    {
-        _rigidbody = GetComponent<Rigidbody>();
-
-        SetupStateMachine();
-        SetupGestures();
-
-        // TODO Esto habra que llamarlo desde otro lado con alguna config probablemente
-        Init();
-
-    }
 
     #region StateMachine
     void SetupStateMachine()
@@ -78,7 +78,12 @@ public class PlayerController : MonoBehaviour
 
     public void Init()
     {
-
+        _instance = this;
+        
+        _rigidbody = GetComponent<Rigidbody>();
+        
+        SetupStateMachine();
+        SetupGestures();
         _cameraController = FindObjectOfType<GolfCameraController>();
         ResetToPosition(InitialPosition.position);
         ResetRotation(InitialPosition.rotation);
@@ -124,6 +129,11 @@ public class PlayerController : MonoBehaviour
         var shootPower = _minShootPower + ((_maxShootPower - _minShootPower) * _trajectoryLine.Power);
         Debug.Log("SHOOT POWER " + _trajectoryLine.Power + "   FINAL " + shootPower);
         _rigidbody.AddForce(_trajectoryLine.GetAimingDirection() * shootPower, ForceMode.Impulse);
+
+        if (OnShoot != null)
+        {
+            OnShoot();
+        }
     }
 
     public TrajectoryLine GetTrajectoryLine()
