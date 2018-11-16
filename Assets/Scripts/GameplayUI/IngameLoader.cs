@@ -6,8 +6,7 @@ public class IngameLoader : LogicComponent
 {
     [Header("Prefabs")] [SerializeField] private GameObject _playerBall;
     [SerializeField] private GameObject _camera;
-    [SerializeField] private GameObject _touchManager;
-    [SerializeField] private GameObject _touchPlane;
+    [SerializeField] private GameObject _inputManager;
     
     [Header("Utils")]
     [SerializeField] private GameObject _playerSpawnPosition;
@@ -20,12 +19,11 @@ public class IngameLoader : LogicComponent
             return;
         }
 
+        Instantiate(_inputManager);
         var playerObject = Instantiate(_playerBall);
-        playerObject.GetComponent<PlayerController>().InitialPosition = _playerSpawnPosition.transform;
+        //playerObject.GetComponent<PlayerController>().InitialPosition = _playerSpawnPosition.transform;
         var cameraObject = Instantiate(_camera);
         cameraObject.GetComponent<GolfCameraController>().Target = playerObject;
-        Instantiate(_touchManager);
-        Instantiate(_touchPlane);
     }
 
 }

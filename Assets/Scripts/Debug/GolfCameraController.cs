@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using TouchScript.Gestures;
+﻿using BlastyEvents;
+using UnityEngine;
 
 public class GolfCameraController : MonoBehaviour
 {
@@ -23,7 +23,35 @@ public class GolfCameraController : MonoBehaviour
         _initialPosition = transform.localPosition;
         _targetRigidbody = Target.GetComponent<Rigidbody>();
 
+        EventManager.Instance.StartListening(TouchEvent.EventName, Listener);
         SetInitialCamera();
+    }
+
+    private void Listener(BlastyEventData ev)
+    {
+        var touchEventData = (TouchEventData) ev;
+
+        if (touchEventData.PanType == TouchManager.PanType.Player)
+        {
+            return;
+        }
+        
+        switch (touchEventData.TouchState)
+        {
+            case TouchManager.TouchState.InitPan:
+                //_initialDragPosition = sender.ScreenPosition;
+                //GetInitialDirectionOnScreenSpace();
+                break;
+            case TouchManager.TouchState.UpdatePan:
+                RotateCameraAroundPlayer(touchEventData.DeltaIncrement);
+                //MoveDirectionArrow((_initialDragPosition - sender.ScreenPosition).normalized);
+                //UpdateArrowSize(sender.ScreenPosition);
+                break;
+            case TouchManager.TouchState.FinishPan:
+                //ResetRotation();
+                break;
+
+        }
     }
 
     void Update ()
@@ -48,6 +76,7 @@ public class GolfCameraController : MonoBehaviour
         transform.localPosition = Vector3.SmoothDamp(transform.localPosition, Target.transform.position + CameraPositionOffset, ref velocity, lerpValue);
     }
 
+    /*
     public void OnGestureStateChanged(Gesture sender)
     {
         switch (sender.State)
@@ -69,10 +98,10 @@ public class GolfCameraController : MonoBehaviour
 
         }
     }
+    */
 
-    void RotateCameraAroundPlayer(Gesture sender)
+    void RotateCameraAroundPlayer(Vector2 deltaIncrement)
     {
-        var increment = sender.ScreenPosition.x - sender.PreviousScreenPosition.x;
-        transform.RotateAround(Target.transform.position, Vector3.up, increment);
+        transform.RotateAround(Target.transform.position, Vector3.up, deltaIncrement.x);
     }
 }

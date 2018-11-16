@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using TouchScript.Gestures;
 
 public class WaitForInput : IState
 {
@@ -18,7 +17,7 @@ public class WaitForInput : IState
 
     public void Enter()
     {
-        _playerController.OnInputChangedEvent += OnInputChanged;
+        //_playerController.OnInputChangedEvent += OnInputChanged;
     }
 
     public void Execute()
@@ -28,10 +27,11 @@ public class WaitForInput : IState
 
     public void Exit()
     {
-        _playerController.OnInputChangedEvent -= OnInputChanged;
+       // _playerController.OnInputChangedEvent -= OnInputChanged;
         
     }
 
+    /*
     void OnInputChanged(Gesture.GestureState gesture, Vector2 inputPosition)
     {
         switch (gesture)
@@ -50,4 +50,5 @@ public class WaitForInput : IState
         }
 
     }
+    */
 }

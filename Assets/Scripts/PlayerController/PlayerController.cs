@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using TouchScript.Gestures;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,10 +10,9 @@ public class PlayerController : MonoBehaviour
 
     SimpleStateMachine _stateMachine;
     private Rigidbody _rigidbody;
-    MetaGesture _metaGesture;
 
-    public delegate void OnInputChangedEventHandler(Gesture.GestureState gestureState, Vector2 deltaPosition);
-    public event OnInputChangedEventHandler OnInputChangedEvent;
+    //public delegate void OnInputChangedEventHandler(Gesture.GestureState gestureState, Vector2 deltaPosition);
+   // public event OnInputChangedEventHandler OnInputChangedEvent;
 
     WaitForInput _waitForInputState;
     InPlayerMovementState _inMovementState;
@@ -64,9 +62,10 @@ public class PlayerController : MonoBehaviour
 
     void SetupGestures()
     {
-        _metaGesture = GetComponent<MetaGesture>();
+        //_metaGesture = GetComponent<MetaGesture>();
     }
 
+    /*
     public void OnGestureStateChanged(Gesture sender)
     {
         //Debug.Log(sender.State);
@@ -75,13 +74,14 @@ public class PlayerController : MonoBehaviour
             OnInputChangedEvent(sender.State, sender.ScreenPosition);
         }
     }
+    */
 
     public void Init()
     {
 
         _cameraController = FindObjectOfType<GolfCameraController>();
-        ResetToPosition(InitialPosition.position);
-        ResetRotation(InitialPosition.rotation);
+        //ResetToPosition(InitialPosition.position);
+        //ResetRotation(InitialPosition.rotation);
         _stateMachine.ChangeState(_waitForInputState);
         _cameraController.SetInitialCamera();
     }

@@ -1,5 +1,4 @@
-﻿using TouchScript.Gestures;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class TrajectoryLine : MonoBehaviour
@@ -55,6 +54,7 @@ public class TrajectoryLine : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    /*
     public void OnGestureStateChanged(Gesture sender)
     {
         switch(sender.State)
@@ -75,7 +75,7 @@ public class TrajectoryLine : MonoBehaviour
 
         }
     }
-
+    */
     void GetInitialDirectionOnScreenSpace()
     {
         var startPoint = Camera.main.WorldToScreenPoint(_playerController.transform.position);

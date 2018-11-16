@@ -1,30 +1,24 @@
-﻿using UnityEngine.Events;
-using System;
+﻿using System;
+using UnityEngine.Events;
 
-public interface IEventData { }
-
-[Serializable]
-public abstract class GameEvent : UnityEvent<GameEventData>
+namespace BlastyEvents
 {
-    public void Initialize()
+    [Serializable]
+    public abstract class BlastyEvent : UnityEvent<BlastyEventData>
     {
-        EventManager.RegisterEvent(GetEventName(), this);
+        public void Initialize()
+        {
+            EventManager.Instance.RegisterEvent(this);
+        }
+
+        public abstract string GetEventName();
+
+        public void Raise(BlastyEventData data)
+        {
+            EventManager.Instance.TriggerEvent(GetEventName(), data);
+        }
     }
 
-    public abstract string GetEventName();
-}
-
-[Serializable]
-public class ExampleEvent : GameEvent
-{
-    public static string EventName = "exampleevent";
-    public override string GetEventName() { return EventName; }
-}
-
-public interface GameEventData { }
-
-public class ExampleEventData : GameEventData
-{
-    public int x;
-    public int y;
+    public interface BlastyEventData { }
+   
 }

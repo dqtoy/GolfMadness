@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 114933939561043904}
   - component: {fileID: 114544414885837092}
   - component: {fileID: 114681418593606976}
+  - component: {fileID: 114897551478751572}
   m_Layer: 29
   m_Name: ball
   m_TagString: Untagged
@@ -437,6 +438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd90a8856e1a49eba25728d5aaac9f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugMode: 0
   OnStateChange:
     m_PersistentCalls:
       m_Calls:
@@ -522,6 +524,29 @@ MonoBehaviour:
   _directionAngleIncrement: -0.2
   _maxVerticalSizeScreenPercentage: 0.3
   _maxVerticalScale: 3
+--- !u!114 &114897551478751572
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1752025744826850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e5768c36d1bb4acea50bd233372843a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Layer
+  basicEditor: 1
+  advancedProps: 0
+  hitProps: 0
+  hit3DObjects: 1
+  hit2DObjects: 1
+  hitWorldSpaceUI: 1
+  hitScreenSpaceUI: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 536870912
+  useHitFilters: 0
 --- !u!114 &114933939561043904
 MonoBehaviour:
   m_ObjectHideFlags: 1
