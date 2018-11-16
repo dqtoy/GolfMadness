@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BlastyEvents;
 using UnityEngine;
 
 public class TrajectoryLine : MonoBehaviour
@@ -42,6 +43,36 @@ public class TrajectoryLine : MonoBehaviour
         ResetRotation();
         _initialPosition = transform.localPosition;
         FinishAiming();
+        
+        EventManager.Instance.StartListening(TouchEvent.EventName, OnPanUpdated);
+        
+    }
+
+
+
+    private void OnPanUpdated(BlastyEventData ev)
+    {
+        var touchEventData = (TouchEventData) ev;
+
+        if (touchEventData.PanType == TouchManager.PanType.World)
+            return;
+        
+        switch (touchEventData.TouchState)
+        {
+            case TouchManager.TouchState.InitPan:
+                _initialDragPosition = touchEventData.CurPosition;
+                StartNewAiming();
+                GetInitialDirectionOnScreenSpace();
+                break;
+            case TouchManager.TouchState.UpdatePan:
+                MoveDirectionArrow(touchEventData);
+                UpdateArrowSize(touchEventData.CurPosition);
+                break;
+            case TouchManager.TouchState.FinishPan:
+                ResetRotation();
+                FinishAiming();
+                break;
+        }
     }
 
     public void StartNewAiming()
@@ -54,28 +85,6 @@ public class TrajectoryLine : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    /*
-    public void OnGestureStateChanged(Gesture sender)
-    {
-        switch(sender.State)
-        {
-            case Gesture.GestureState.Began:
-                _initialDragPosition = sender.ScreenPosition;
-                GetInitialDirectionOnScreenSpace();
-                break;
-            case Gesture.GestureState.Changed:
-                MoveDirectionArrow((_initialDragPosition - sender.ScreenPosition).normalized);
-                UpdateArrowSize(sender.ScreenPosition);
-                break;
-            case Gesture.GestureState.Ended:
-            case Gesture.GestureState.Failed:
-            case Gesture.GestureState.Cancelled:
-                ResetRotation();
-                break;
-
-        }
-    }
-    */
     void GetInitialDirectionOnScreenSpace()
     {
         var startPoint = Camera.main.WorldToScreenPoint(_playerController.transform.position);
@@ -103,14 +112,17 @@ public class TrajectoryLine : MonoBehaviour
         //Debug.Log("DISTANCE " + verticalPercentage + "  SIZE " + verticalPercentage * _maxVerticalScale * -1f);
     }
 
-    void MoveDirectionArrow(Vector2 curDirection)
+    void MoveDirectionArrow(TouchEventData touchEventData)
     {
-        var angles = Vector2.SignedAngle(curDirection, _onScreenInitialDirection);
-        var dotProduct = Vector2.Dot(curDirection, _onScreenInitialDirection);
-
-        //Debug.Log("ANGLE " + angles + "  DOT " + dotProduct);
+        var initialDirection = touchEventData.CurPosition - touchEventData.InitPosition;
         
-        transform.localRotation = Quaternion.Euler(0f, _initialYRotation + angles, 0f);
+        var angles = Vector2.SignedAngle(touchEventData.DeltaIncrement, initialDirection);
+        var dotProduct = Vector2.Dot(touchEventData.DeltaIncrement, initialDirection);
+
+        angles = touchEventData.DeltaIncrement.x;
+        Debug.Log("INCREMENT " + touchEventData.DeltaIncrement.x + "   ROT " + transform.localRotation.y + "   INCR " + angles);
+        transform.localRotation = Quaternion.Euler(0f, transform.localRotation.y + angles, 0f);
+        Debug.Log("POST INCREMENT " + touchEventData.DeltaIncrement.x + "   ROT " + transform.localRotation.y);
         //transform.localRotation *= Quaternion.Euler(0f, deltaIncrement.x * _directionAngleIncrement, 0f);
     }
 

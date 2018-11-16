@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -65,17 +64,6 @@ public class PlayerController : MonoBehaviour
         //_metaGesture = GetComponent<MetaGesture>();
     }
 
-    /*
-    public void OnGestureStateChanged(Gesture sender)
-    {
-        //Debug.Log(sender.State);
-        if (OnInputChangedEvent != null)
-        {
-            OnInputChangedEvent(sender.State, sender.ScreenPosition);
-        }
-    }
-    */
-
     public void Init()
     {
 
@@ -84,6 +72,7 @@ public class PlayerController : MonoBehaviour
         //ResetRotation(InitialPosition.rotation);
         _stateMachine.ChangeState(_waitForInputState);
         _cameraController.SetInitialCamera();
+        
     }
 
 	

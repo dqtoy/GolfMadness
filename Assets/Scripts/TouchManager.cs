@@ -30,11 +30,14 @@ public class TouchManager : MonoBehaviour
     private int _panTouchId;
 
     private TouchEvent _touchEvent;
+    private int _touchLayer;
     
     void Start ()
     {
         _panType = PanType.None;
         _touchState = TouchState.None;
+
+        _touchLayer = 1 << 29;
         
         _touchEvent = new TouchEvent();
         _touchEvent.Initialize();
@@ -44,7 +47,8 @@ public class TouchManager : MonoBehaviour
     {
         //UpdateMobileInput();
         UpdateDesktopInput();
-
+        var ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f));
+        Debug.DrawRay(ray.origin, ray.direction * 20f, Color.magenta, 1f);
     }
 
     void UpdateDesktopInput()
@@ -54,10 +58,12 @@ public class TouchManager : MonoBehaviour
             _touchState = TouchState.InitPan;
             _initPanPosition = Input.mousePosition;
             _prevPanPosition = Vector2.zero;
-            _curPanPosition = Input.mousePosition;;
+            _curPanPosition = Input.mousePosition;
 
-            var ray = Camera.main.ScreenPointToRay(new Vector3(_curPanPosition.x, _curPanPosition.y, 100));
-            if (Physics.Raycast(ray, 9999f, 29))
+            var ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f));
+            Debug.DrawRay(ray.origin, ray.direction * 20f, Color.magenta, 1f);
+            RaycastHit hit;
+            if (Physics.Raycast(ray.origin, ray.direction, out hit, 9999f, _touchLayer))
             {
                 _panType = PanType.Player;
             }
@@ -66,7 +72,13 @@ public class TouchManager : MonoBehaviour
                 _panType = PanType.World;
             }
 
-            TriggerTouchEvent(_curPanPosition, Vector2.zero);
+            if (hit.collider != null)
+            {
+                Debug.Log(hit.collider.name);
+            }
+            
+            Debug.Log("START PAN WITH " + _panType);
+            TriggerTouchEvent(Vector2.zero);
             return;
         }
 
@@ -76,142 +88,26 @@ public class TouchManager : MonoBehaviour
             _prevPanPosition = _curPanPosition;
             _curPanPosition = Input.mousePosition;
             
-            TriggerTouchEvent(Input.mousePosition, _curPanPosition - _prevPanPosition);
-            Debug.Log("b");
+            //Debug.Log("PREV " + _prevPanPosition + "   CUR: " + _curPanPosition + "   DELTA  "  + (_curPanPosition - _prevPanPosition));
+            TriggerTouchEvent(_curPanPosition - _prevPanPosition);
         }
         
         if (Input.GetButtonUp("Fire1"))
         {
-            Debug.Log("c");
-            
-        }
-        
-        /*
-
-            case TouchState.InitPan:
-                if (_panTouchId != touch.fingerId)
-                {
-                    return;
-                }
-
-                _prevPanPosition = _curPanPosition;
-                _curPanPosition = touch.position;
-                _touchState = TouchState.UpdatePan;
-                TriggerTouchEvent(touch);
-
-
-                break;
-
-            case TouchState.UpdatePan:
-                if (_panTouchId != touch.fingerId)
-                {
-                    return;
-                }
-
-                _prevPanPosition = _curPanPosition;
-                _curPanPosition = touch.position;
-                TriggerTouchEvent(touch);
-                break;
-
-            case TouchState.FinishPan:
-                _touchState = TouchState.FinishPan;
-                TriggerTouchEvent(touch);
-                break;
-                }
-                */
-    }
-    
-    /*
-    void UpdateMobileInput()
-    {
-         Debug.Log("TOUCHES " + Input.touches.Length);
-        foreach(var touch in Input.touches) 
-        {
-            switch (_touchState)
-            {
-                case TouchState.None:
-                    if (touch.phase == TouchPhase.Began)
-                    {
-                        _panTouchId = touch.fingerId;
-                        _touchState = TouchState.InitPan;
-                        _initPanPosition = touch.position;
-                        _prevPanPosition = Vector2.zero;
-                        _curPanPosition = touch.position;
-                        
-                        var touchEventData = new TouchEventData();
-                        touchEventData.TouchState = _touchState;
-                        touchEventData.CurPosition = _curPanPosition;
-                        touchEventData.DeltaIncrement = touch.deltaPosition;
-                        touchEventData.InitPosition = _initPanPosition;
-
-                        var ray = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 100));
-                        if (Physics.Raycast(ray, 9999f, 28))
-                        {
-                            _panType = PanType.Player;
-                        }
-                        else
-                        {
-                            _panType = PanType.World;
-                        }
-
-                        TriggerTouchEvent(touch);
-                        return;
-                    }
-
-                    break;
-                case TouchState.InitPan:
-                    if (_panTouchId != touch.fingerId)
-                    {
-                        return;
-                    }
-
-                    _prevPanPosition = _curPanPosition;
-                    _curPanPosition = touch.position;
-                    _touchState = TouchState.UpdatePan;
-                    TriggerTouchEvent(touch);
-
-                    
-                    break;
-
-                case TouchState.UpdatePan:
-                    if (_panTouchId != touch.fingerId)
-                    {
-                        return;
-                    }
-
-                    _prevPanPosition = _curPanPosition;
-                    _curPanPosition = touch.position;
-                    TriggerTouchEvent(touch);
-                    break;
-
-                case TouchState.FinishPan:
-                    _touchState = TouchState.FinishPan;
-                    TriggerTouchEvent(touch);
-                    break;
-            }
-
+            _touchState = TouchState.FinishPan;
+            TriggerTouchEvent(_curPanPosition - _prevPanPosition);
         }
     }
-    */
     
-    void TriggerTouchEvent(Vector2 curPosition, Vector2 deltaIncrement)
+    void TriggerTouchEvent(Vector2 deltaIncrement)
     {
         var touchEventData = new TouchEventData();
         touchEventData.TouchState = _touchState;
         touchEventData.CurPosition = _curPanPosition;
         touchEventData.DeltaIncrement = deltaIncrement;
         touchEventData.InitPosition = _initPanPosition;
-
-        var ray = Camera.main.ScreenPointToRay(new Vector3(curPosition.x, curPosition.y, 100));
-        if (Physics.Raycast(ray, 9999f, 28))
-        {
-            touchEventData.PanType = PanType.Player;
-        }
-        else
-        {
-            touchEventData.PanType = PanType.World;
-        }
-                        
+        touchEventData.PanType = _panType;
+         
         EventManager.Instance.TriggerEvent(TouchEvent.EventName, touchEventData);
     }
 }

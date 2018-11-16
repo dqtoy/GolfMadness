@@ -23,11 +23,11 @@ public class GolfCameraController : MonoBehaviour
         _initialPosition = transform.localPosition;
         _targetRigidbody = Target.GetComponent<Rigidbody>();
 
-        EventManager.Instance.StartListening(TouchEvent.EventName, Listener);
+        EventManager.Instance.StartListening(TouchEvent.EventName, OnPanUpdated);
         SetInitialCamera();
     }
 
-    private void Listener(BlastyEventData ev)
+    private void OnPanUpdated(BlastyEventData ev)
     {
         var touchEventData = (TouchEventData) ev;
 
@@ -44,8 +44,6 @@ public class GolfCameraController : MonoBehaviour
                 break;
             case TouchManager.TouchState.UpdatePan:
                 RotateCameraAroundPlayer(touchEventData.DeltaIncrement);
-                //MoveDirectionArrow((_initialDragPosition - sender.ScreenPosition).normalized);
-                //UpdateArrowSize(sender.ScreenPosition);
                 break;
             case TouchManager.TouchState.FinishPan:
                 //ResetRotation();
@@ -75,30 +73,6 @@ public class GolfCameraController : MonoBehaviour
         transform.LookAt(targetPosition);
         transform.localPosition = Vector3.SmoothDamp(transform.localPosition, Target.transform.position + CameraPositionOffset, ref velocity, lerpValue);
     }
-
-    /*
-    public void OnGestureStateChanged(Gesture sender)
-    {
-        switch (sender.State)
-        {
-            case Gesture.GestureState.Began:
-                //_initialDragPosition = sender.ScreenPosition;
-                //GetInitialDirectionOnScreenSpace();
-                break;
-            case Gesture.GestureState.Changed:
-                RotateCameraAroundPlayer(sender);
-                //MoveDirectionArrow((_initialDragPosition - sender.ScreenPosition).normalized);
-                //UpdateArrowSize(sender.ScreenPosition);
-                break;
-            case Gesture.GestureState.Ended:
-            case Gesture.GestureState.Failed:
-            case Gesture.GestureState.Cancelled:
-                //ResetRotation();
-                break;
-
-        }
-    }
-    */
 
     void RotateCameraAroundPlayer(Vector2 deltaIncrement)
     {
