@@ -30,6 +30,8 @@ public class TouchManager : MonoBehaviour
     private int _panTouchId;
 
     private TouchEvent _touchEvent;
+    private ShootEvent _shootEvent;
+    
     private int _touchLayer;
     
     void Start ()
@@ -41,14 +43,17 @@ public class TouchManager : MonoBehaviour
         
         _touchEvent = new TouchEvent();
         _touchEvent.Initialize();
+        
+        _shootEvent = new ShootEvent();
+        _shootEvent.Initialize();
     }
 
     void Update ()
     {
         //UpdateMobileInput();
         UpdateDesktopInput();
-        var ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f));
-        Debug.DrawRay(ray.origin, ray.direction * 20f, Color.magenta, 1f);
+        //var ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f));
+        //Debug.DrawRay(ray.origin, ray.direction * 20f, Color.magenta, 1f);
     }
 
     void UpdateDesktopInput()
@@ -94,8 +99,22 @@ public class TouchManager : MonoBehaviour
         
         if (Input.GetButtonUp("Fire1"))
         {
+            float panDistance = Vector2.Distance(_initPanPosition, Input.mousePosition);
+           // Debug.Log("DISTANCE " + panDistance);
+
             _touchState = TouchState.FinishPan;
             TriggerTouchEvent(_curPanPosition - _prevPanPosition);
+
+            var createShootEvent = panDistance > 40f;
+
+            if (!createShootEvent)
+                return;
+            
+            var shootEventData = new ShootEventData();
+            shootEventData.ValidShot = true;
+            shootEventData.Power = 10f;
+            
+            EventManager.Instance.TriggerEvent(ShootEvent.EventName, shootEventData);
         }
     }
     
@@ -107,6 +126,7 @@ public class TouchManager : MonoBehaviour
         touchEventData.DeltaIncrement = deltaIncrement;
         touchEventData.InitPosition = _initPanPosition;
         touchEventData.PanType = _panType;
+        touchEventData.CurDirection = (_curPanPosition - _initPanPosition).normalized;
          
         EventManager.Instance.TriggerEvent(TouchEvent.EventName, touchEventData);
     }

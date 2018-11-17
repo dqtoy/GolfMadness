@@ -100,11 +100,9 @@ GameObject:
   - component: {fileID: 4476756742905270}
   - component: {fileID: 135090571619470700}
   - component: {fileID: 54214571216606730}
-  - component: {fileID: 114313728613798920}
   - component: {fileID: 114933939561043904}
   - component: {fileID: 114544414885837092}
   - component: {fileID: 114681418593606976}
-  - component: {fileID: 114897551478751572}
   m_Layer: 29
   m_Name: ball
   m_TagString: Untagged
@@ -301,7 +299,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: cdf290b683dbd0044adfcd00f4c36ab0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -371,7 +369,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ab1be233292e6654f81d3d74c9aef51b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -427,58 +425,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &114313728613798920
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1752025744826850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fd90a8856e1a49eba25728d5aaac9f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debugMode: 0
-  OnStateChange:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114933939561043904}
-        m_MethodName: OnGestureStateChanged
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 114313728613798920}
-          m_ObjectArgumentAssemblyTypeName: TouchScript.Gestures.Gesture, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 114746566497446586}
-        m_MethodName: OnGestureStateChanged
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 114313728613798920}
-          m_ObjectArgumentAssemblyTypeName: TouchScript.Gestures.Gesture, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: TouchScript.Gestures.Gesture+GestureEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  basicEditor: 0
-  generalProps: 0
-  limitsProps: 0
-  advancedProps: 0
-  minPointers: 0
-  maxPointers: 0
-  useSendMessage: 1
-  sendStateChangeMessages: 0
-  sendMessageTarget: {fileID: 0}
-  useUnityEvents: 1
-  sendStateChangeEvents: 1
-  requireGestureToFail: {fileID: 0}
-  friendlyGestures: []
 --- !u!114 &114544414885837092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -521,32 +467,9 @@ MonoBehaviour:
   _startDummy: {fileID: 1427918412231254}
   _endDummy: {fileID: 1744699080729500}
   _arrowModel: {fileID: 1832840120720970}
-  _directionAngleIncrement: -0.2
+  _directionAngleIncrement: 1
   _maxVerticalSizeScreenPercentage: 0.3
   _maxVerticalScale: 3
---- !u!114 &114897551478751572
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1752025744826850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e5768c36d1bb4acea50bd233372843a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Layer
-  basicEditor: 1
-  advancedProps: 0
-  hitProps: 0
-  hit3DObjects: 1
-  hit2DObjects: 1
-  hitWorldSpaceUI: 1
-  hitScreenSpaceUI: 1
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 536870912
-  useHitFilters: 0
 --- !u!114 &114933939561043904
 MonoBehaviour:
   m_ObjectHideFlags: 1

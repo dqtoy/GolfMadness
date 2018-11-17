@@ -17,6 +17,7 @@ public class WaitForInput : IState
 
     public void Enter()
     {
+        //_playerController.ResetRotation();
         //_playerController.OnInputChangedEvent += OnInputChanged;
     }
 
@@ -31,24 +32,4 @@ public class WaitForInput : IState
         
     }
 
-    /*
-    void OnInputChanged(Gesture.GestureState gesture, Vector2 inputPosition)
-    {
-        switch (gesture)
-        {
-            case Gesture.GestureState.Began:
-                _initialInputPosition = inputPosition;
-                _trajectoryLine.StartNewAiming();
-                break;
-            case Gesture.GestureState.Changed:
-                _trajectoryLine.StartNewAiming();
-                break;
-            case Gesture.GestureState.Ended:
-                _trajectoryLine.FinishAiming();
-                _playerController.OnInputFinished();
-                break;
-        }
-
-    }
-    */
 }

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Xml.Schema;
 using BlastyEvents;
 using UnityEngine;
 
@@ -33,6 +35,7 @@ public class TrajectoryLine : MonoBehaviour
     float _curPower;
 
     Vector2 _onScreenInitialDirection;
+    private Vector2 _startBallForwardDirection;
     float _initialYRotation;
 
     public float Power { get { return _curPower; } }
@@ -45,9 +48,19 @@ public class TrajectoryLine : MonoBehaviour
         FinishAiming();
         
         EventManager.Instance.StartListening(TouchEvent.EventName, OnPanUpdated);
-        
+        EventManager.Instance.StartListening(ShootEvent.EventName, PanFinished);
     }
 
+    private void PanFinished(BlastyEventData ev)
+    {
+        var shootEv = (ShootEventData) ev;
+
+        if (shootEv.ValidShot)
+        {
+            ResetRotation();
+            FinishAiming();
+        }
+    }
 
 
     private void OnPanUpdated(BlastyEventData ev)
@@ -68,15 +81,16 @@ public class TrajectoryLine : MonoBehaviour
                 MoveDirectionArrow(touchEventData);
                 UpdateArrowSize(touchEventData.CurPosition);
                 break;
-            case TouchManager.TouchState.FinishPan:
-                ResetRotation();
-                FinishAiming();
-                break;
         }
     }
 
     public void StartNewAiming()
     {
+        var startPoint = Camera.main.WorldToScreenPoint(_playerController.transform.position);
+        var endPoint = Camera.main.WorldToScreenPoint(_playerController.transform.position + 
+                                                         _playerController.transform.forward );
+
+        _startBallForwardDirection = (endPoint - startPoint).normalized;
         gameObject.SetActive(true);
     }
 
@@ -112,30 +126,21 @@ public class TrajectoryLine : MonoBehaviour
         //Debug.Log("DISTANCE " + verticalPercentage + "  SIZE " + verticalPercentage * _maxVerticalScale * -1f);
     }
 
+    
     void MoveDirectionArrow(TouchEventData touchEventData)
     {
-        var initialDirection = touchEventData.CurPosition - touchEventData.InitPosition;
+        var angles = Vector2.SignedAngle(touchEventData.CurDirection, _startBallForwardDirection);
+        angles *= _directionAngleIncrement;
+        angles += 180f;
+        //Debug.Log("ANGLES " + angles + "   DOT PROD " + dotProduct);
         
-        var angles = Vector2.SignedAngle(touchEventData.DeltaIncrement, initialDirection);
-        var dotProduct = Vector2.Dot(touchEventData.DeltaIncrement, initialDirection);
-
-        angles = touchEventData.DeltaIncrement.x;
-        Debug.Log("INCREMENT " + touchEventData.DeltaIncrement.x + "   ROT " + transform.localRotation.y + "   INCR " + angles);
         transform.localRotation = Quaternion.Euler(0f, transform.localRotation.y + angles, 0f);
-        Debug.Log("POST INCREMENT " + touchEventData.DeltaIncrement.x + "   ROT " + transform.localRotation.y);
-        //transform.localRotation *= Quaternion.Euler(0f, deltaIncrement.x * _directionAngleIncrement, 0f);
     }
 
     private Vector3 _originDirPos, _endDirPos;
     public Vector3 GetAimingDirection()
     {
-        _originDirPos = _startDummy.transform.position;
-        _originDirPos.y = CollisionHeight;
-
-        _endDirPos = _endDummy.transform.position;
-        _endDirPos.y = CollisionHeight;
-        
-        return (_originDirPos - _endDirPos).normalized;
+        return (_startDummy.transform.position - _endDummy.transform.position).normalized;
     }
 
     void ResetRotation()

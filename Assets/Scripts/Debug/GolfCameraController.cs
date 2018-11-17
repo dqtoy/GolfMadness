@@ -33,6 +33,7 @@ public class GolfCameraController : MonoBehaviour
 
         if (touchEventData.PanType == TouchManager.PanType.Player)
         {
+            TryUpdateRotationBecauseOfAimingLimit(touchEventData.CurDirection);
             return;
         }
         
@@ -48,10 +49,17 @@ public class GolfCameraController : MonoBehaviour
             case TouchManager.TouchState.FinishPan:
                 //ResetRotation();
                 break;
-
         }
     }
 
+    void TryUpdateRotationBecauseOfAimingLimit(Vector2 curDirection)
+    {
+        if (curDirection.y > -0.2f)
+        {
+            RotateCameraAroundPlayer(new Vector2(-curDirection.x, curDirection.y));
+        }
+    }
+    
     void Update ()
     {
         if (_targetRigidbody.velocity.magnitude > MinSpeed || _targetRigidbody.angularVelocity.magnitude > MinSpeed)

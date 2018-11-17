@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace BlastyEvents
 {
@@ -20,6 +19,6 @@ namespace BlastyEvents
         public Vector2 InitPosition;
         public Vector2 CurPosition;
         public TouchManager.PanType PanType;
+        public Vector2 CurDirection;
     }
-
 }

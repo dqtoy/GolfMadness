@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BlastyEvents;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -27,7 +28,6 @@ public class PlayerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
 
         SetupStateMachine();
-        SetupGestures();
 
         // TODO Esto habra que llamarlo desde otro lado con alguna config probablemente
         Init();
@@ -40,13 +40,6 @@ public class PlayerController : MonoBehaviour
         _stateMachine = new SimpleStateMachine();
         _waitForInputState = new WaitForInput(this);
         _inMovementState = new InPlayerMovementState(this);
-
-    }
-
-    public void OnInputFinished()
-    {
-        Shoot();
-        _stateMachine.ChangeState(_inMovementState);
     }
 
     public void PlayerStopMoving()
@@ -59,24 +52,30 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    void SetupGestures()
-    {
-        //_metaGesture = GetComponent<MetaGesture>();
-    }
-
     public void Init()
     {
 
         _cameraController = FindObjectOfType<GolfCameraController>();
-        //ResetToPosition(InitialPosition.position);
-        //ResetRotation(InitialPosition.rotation);
+        StopAllForces();
         _stateMachine.ChangeState(_waitForInputState);
         _cameraController.SetInitialCamera();
         
+        EventManager.Instance.StartListening(ShootEvent.EventName, PanFinished);
     }
 
-	
-	void Update ()
+    private void PanFinished(BlastyEventData ev)
+    {
+        var shootEv = (ShootEventData) ev;
+
+        if (shootEv.ValidShot)
+        {
+            Shoot();
+            _stateMachine.ChangeState(_inMovementState);
+        }
+    }
+
+
+    void Update ()
     {
         _stateMachine.Update();
 
@@ -87,7 +86,7 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKeyUp(KeyCode.R))
         {
-            Init();
+            StopAllForces();
         }
     }
 
@@ -95,24 +94,27 @@ public class PlayerController : MonoBehaviour
     {
         StopAllForces();
         transform.position = pos;
+        ResetRotation();
     }
 
-    public void ResetRotation(Quaternion rotation)
+    public void ResetRotation()
     {
-        transform.localRotation = rotation;
+        transform.localRotation = Quaternion.identity;
     }
 
     void StopAllForces()
     {
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.angularVelocity = Vector3.zero;
+        ResetRotation();
     }
 
     void Shoot()
     {
         var shootPower = _minShootPower + ((_maxShootPower - _minShootPower) * _trajectoryLine.Power);
-        Debug.Log("SHOOT POWER " + _trajectoryLine.Power + "   FINAL " + shootPower);
+        //Debug.Log("SHOOT POWER " + _trajectoryLine.Power + "   FINAL " + shootPower);
         _rigidbody.AddForce(_trajectoryLine.GetAimingDirection() * shootPower, ForceMode.Impulse);
+        
     }
 
     public TrajectoryLine GetTrajectoryLine()
@@ -126,4 +128,10 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    private void OnDestroy()
+    {
+                
+        // TODO move it somewhere else
+        EventManager.Instance.ResetAllEvents();
+    }
 }
