@@ -143,10 +143,15 @@ public class TrajectoryLine : MonoBehaviour
         angles *= _directionAngleIncrement;
         angles += 180f;
         //Debug.Log("ANGLES " + angles + "   DOT PROD " + dotProduct);
-        
-        transform.localRotation = Quaternion.Euler(0f, transform.localRotation.y + angles, 0f);
+
+        UpdateRotation(angles);
     }
 
+    public void UpdateRotation(float angles)
+    {
+        transform.localRotation = Quaternion.Euler(0f, transform.localRotation.y + angles, 0f);
+    }
+    
     private Vector3 _originDirPos, _endDirPos;
     public Vector3 GetAimingDirection()
     {
