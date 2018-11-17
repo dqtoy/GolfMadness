@@ -82,7 +82,7 @@ public class TouchManager : MonoBehaviour
                 Debug.Log(hit.collider.name);
             }
             
-            Debug.Log("START PAN WITH " + _panType);
+            //Debug.Log("START PAN WITH " + _panType);
             TriggerTouchEvent(Vector2.zero);
             return;
         }
@@ -99,22 +99,8 @@ public class TouchManager : MonoBehaviour
         
         if (Input.GetButtonUp("Fire1"))
         {
-            float panDistance = Vector2.Distance(_initPanPosition, Input.mousePosition);
-           // Debug.Log("DISTANCE " + panDistance);
-
             _touchState = TouchState.FinishPan;
             TriggerTouchEvent(_curPanPosition - _prevPanPosition);
-
-            var createShootEvent = panDistance > 40f;
-
-            if (!createShootEvent)
-                return;
-            
-            var shootEventData = new ShootEventData();
-            shootEventData.ValidShot = true;
-            shootEventData.Power = 10f;
-            
-            EventManager.Instance.TriggerEvent(ShootEvent.EventName, shootEventData);
         }
     }
     

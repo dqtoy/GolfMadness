@@ -18,7 +18,8 @@ public class IngameUIController : UIController
     void InitTries()
     {
         var levelData = ServicesManager.Instance.CurrentLevel();
-        OnTryUpdate(levelData.AmountOfTries);
+        ServicesManager.Instance.TriesManager.OnTriesUpdated = OnTryUpdate;
+        ServicesManager.Instance.TriesManager.Init(levelData.AmountOfTries);
     }
 
     public void OnTryUpdate(int amount)

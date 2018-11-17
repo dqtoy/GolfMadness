@@ -470,6 +470,8 @@ MonoBehaviour:
   _directionAngleIncrement: 1
   _maxVerticalSizeScreenPercentage: 0.3
   _maxVerticalScale: 3
+  _minPowerToShoot: 0.1
+  _curPower: 0
 --- !u!114 &114933939561043904
 MonoBehaviour:
   m_ObjectHideFlags: 1

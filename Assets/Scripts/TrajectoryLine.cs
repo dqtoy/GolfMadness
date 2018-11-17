@@ -25,14 +25,13 @@ public class TrajectoryLine : MonoBehaviour
     [SerializeField] float _directionAngleIncrement;
     [SerializeField] float _maxVerticalSizeScreenPercentage;
     [SerializeField] float _maxVerticalScale;
-
-    List<TrajectoryStepData> _trajectorySteps = new List<TrajectoryStepData>();
+    [SerializeField] float _minPowerToShoot = 0.1f;
 
     private int reboundLayerMask;
 
     Vector2 _initialDragPosition;
     Vector3 _initialPosition;
-    float _curPower;
+    [SerializeField] private float _curPower;
 
     Vector2 _onScreenInitialDirection;
     private Vector2 _startBallForwardDirection;
@@ -80,6 +79,17 @@ public class TrajectoryLine : MonoBehaviour
             case TouchManager.TouchState.UpdatePan:
                 MoveDirectionArrow(touchEventData);
                 UpdateArrowSize(touchEventData.CurPosition);
+                break;
+            case TouchManager.TouchState.FinishPan:
+                if (_curPower < _minPowerToShoot)
+                    return;
+            
+                var shootEventData = new ShootEventData();
+                shootEventData.ValidShot = true;
+                shootEventData.Power = 10f;
+            
+                EventManager.Instance.TriggerEvent(ShootEvent.EventName, shootEventData);
+
                 break;
         }
     }

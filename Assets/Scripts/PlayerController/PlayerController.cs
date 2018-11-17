@@ -3,6 +3,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private static PlayerController _instance;
+    public static PlayerController Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+    
     [SerializeField] private TrajectoryLine _trajectoryLine;
     [SerializeField] float _minShootPower;
     [SerializeField] float _maxShootPower;
@@ -18,6 +27,9 @@ public class PlayerController : MonoBehaviour
     InPlayerMovementState _inMovementState;
 
     public Transform InitialPosition;
+
+    public delegate void OnShootDelegate();
+    public event OnShootDelegate OnShoot;
 
     GolfCameraController _cameraController;
 
@@ -52,17 +64,6 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    public void Init()
-    {
-
-        _cameraController = FindObjectOfType<GolfCameraController>();
-        StopAllForces();
-        _stateMachine.ChangeState(_waitForInputState);
-        _cameraController.SetInitialCamera();
-        
-        EventManager.Instance.StartListening(ShootEvent.EventName, PanFinished);
-    }
-
     private void PanFinished(BlastyEventData ev)
     {
         var shootEv = (ShootEventData) ev;
@@ -74,8 +75,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Init()
+    {
+        _instance = this;
+        
+        _rigidbody = GetComponent<Rigidbody>();
+        
+        SetupStateMachine();
+        _cameraController = FindObjectOfType<GolfCameraController>();
+        ResetToPosition(InitialPosition.position);
+        _stateMachine.ChangeState(_waitForInputState);
+        _cameraController.SetInitialCamera();
 
-    void Update ()
+        StopAllForces();
+
+        EventManager.Instance.StartListening(ShootEvent.EventName, PanFinished);
+    }
+
+	
+	void Update ()
     {
         _stateMachine.Update();
 
@@ -114,7 +132,11 @@ public class PlayerController : MonoBehaviour
         var shootPower = _minShootPower + ((_maxShootPower - _minShootPower) * _trajectoryLine.Power);
         //Debug.Log("SHOOT POWER " + _trajectoryLine.Power + "   FINAL " + shootPower);
         _rigidbody.AddForce(_trajectoryLine.GetAimingDirection() * shootPower, ForceMode.Impulse);
-        
+
+        if (OnShoot != null)
+        {
+            OnShoot();
+        }
     }
 
     public TrajectoryLine GetTrajectoryLine()

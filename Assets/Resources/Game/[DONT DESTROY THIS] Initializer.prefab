@@ -71,7 +71,7 @@ MonoBehaviour:
   _playerBall: {fileID: 1752025744826850, guid: 28c70803f32b64e5db527ec6d5be2f28,
     type: 2}
   _camera: {fileID: 1846451165462684, guid: 760d62b3754debb45af6f29012b7fad6, type: 2}
-  _inputManager: {fileID: 1814969895359920, guid: 509cda4cc666c6349ba28d87597ac4ee,
+  _touchManager: {fileID: 1814969895359920, guid: 509cda4cc666c6349ba28d87597ac4ee,
     type: 2}
   _playerSpawnPosition: {fileID: 0}
 --- !u!114 &114380858415395582

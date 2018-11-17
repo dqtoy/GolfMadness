@@ -16,7 +16,7 @@ MonoBehaviour:
   Index: 1
   AmountOfTries: 0
   Title: FIRST LEVEL v2
-  MainMissionDescription: 
-  SecondaryMissionDescription: 
-  ThirdMissionDescription: 
+  MainMissionDescription: Reach the end!
+  SecondaryMissionDescription: Get fire!
+  ThirdMissionDescription: Destroy the fire wall!
   Scene: LevelTest_Toni
