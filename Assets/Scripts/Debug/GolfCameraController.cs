@@ -13,11 +13,14 @@ public class GolfCameraController : MonoBehaviour
     [Range(0, 1)]
     [SerializeField] float MinSpeed = 1;
 
+    [SerializeField] float CameraRotationSpeed = 1;
     Vector3 _initialPosition;
 
     private Vector3 velocity = Vector3.zero;
     private Rigidbody _targetRigidbody;
 
+    private TrajectoryLine _trajectoryLine;
+    
     void Start ()
     {
         _initialPosition = transform.localPosition;
@@ -27,6 +30,12 @@ public class GolfCameraController : MonoBehaviour
         SetInitialCamera();
     }
 
+    public void Init(GameObject initPosition, TrajectoryLine trajectoryLine)
+    {
+        Target = initPosition;
+        _trajectoryLine = trajectoryLine;
+    }
+    
     private void OnPanUpdated(BlastyEventData ev)
     {
         var touchEventData = (TouchEventData) ev;
@@ -57,6 +66,7 @@ public class GolfCameraController : MonoBehaviour
         if (curDirection.y > -0.2f)
         {
             RotateCameraAroundPlayer(new Vector2(-curDirection.x, curDirection.y));
+            //_trajectoryLine.UpdateRotation(curDirection.x * CameraRotationSpeed * Time.deltaTime);
         }
     }
     
@@ -84,6 +94,7 @@ public class GolfCameraController : MonoBehaviour
 
     void RotateCameraAroundPlayer(Vector2 deltaIncrement)
     {
-        transform.RotateAround(Target.transform.position, Vector3.up, deltaIncrement.x);
+        var increment = deltaIncrement.x * CameraRotationSpeed * Time.deltaTime;
+        transform.RotateAround(Target.transform.position, Vector3.up, increment);
     }
 }

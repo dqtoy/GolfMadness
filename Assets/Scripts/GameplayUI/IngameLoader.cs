@@ -26,11 +26,8 @@ public class IngameLoader : LogicComponent
         
         var cameraObject = Instantiate(_camera);
         var cameraController = cameraObject.GetComponent<GolfCameraController>();
-        cameraController.Target = playerObject;
         
-        
-        
-        
+        cameraController.Init(playerObject, playerController.GetTrajectoryLine());
         playerController.Init();
     }
 }

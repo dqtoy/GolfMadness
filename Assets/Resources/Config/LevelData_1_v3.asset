@@ -19,4 +19,4 @@ MonoBehaviour:
   MainMissionDescription: 
   SecondaryMissionDescription: 
   ThirdMissionDescription: 
-  Scene: ElementsSandbox
+  Scene: MiniGolfSampleScene
