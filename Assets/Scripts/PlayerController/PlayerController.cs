@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.angularVelocity = Vector3.zero;
         transform.rotation = Quaternion.Euler(Vector3.zero);
+        _rigidbody.isKinematic = true;
     }
 
     #endregion
@@ -129,6 +130,7 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
+        _rigidbody.isKinematic = false;
         var shootPower = _minShootPower + ((_maxShootPower - _minShootPower) * _trajectoryLine.Power);
         //Debug.Log("SHOOT POWER " + _trajectoryLine.Power + "   FINAL " + shootPower);
         _rigidbody.AddForce(_trajectoryLine.GetAimingDirection() * shootPower, ForceMode.Impulse);

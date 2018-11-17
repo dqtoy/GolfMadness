@@ -77,11 +77,6 @@ public class TouchManager : MonoBehaviour
                 _panType = PanType.World;
             }
 
-            if (hit.collider != null)
-            {
-                Debug.Log(hit.collider.name);
-            }
-            
             //Debug.Log("START PAN WITH " + _panType);
             TriggerTouchEvent(Vector2.zero);
             return;

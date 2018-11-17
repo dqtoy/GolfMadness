@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ElementsSandbox.unity
     guid: 09b0d165ab2644be6a72af61601ece18
+  - enabled: 1
+    path: Assets/Scenes/LevelTest_Toni.unity
+    guid: 0b0444630bcf9452093141907e495a2c
   m_configObjects: {}
