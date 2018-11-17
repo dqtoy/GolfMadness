@@ -1,6 +1,5 @@
-﻿using System;
+﻿using BlastyEvents;
 using UnityEngine;
-using TouchScript.Gestures;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,10 +19,9 @@ public class PlayerController : MonoBehaviour
 
     SimpleStateMachine _stateMachine;
     private Rigidbody _rigidbody;
-    MetaGesture _metaGesture;
 
-    public delegate void OnInputChangedEventHandler(Gesture.GestureState gestureState, Vector2 deltaPosition);
-    public event OnInputChangedEventHandler OnInputChangedEvent;
+    //public delegate void OnInputChangedEventHandler(Gesture.GestureState gestureState, Vector2 deltaPosition);
+   // public event OnInputChangedEventHandler OnInputChangedEvent;
 
     WaitForInput _waitForInputState;
     InPlayerMovementState _inMovementState;
@@ -37,19 +35,23 @@ public class PlayerController : MonoBehaviour
 
     public float MinValidMovementSpeed { get { return _minValidSpeed; } }
 
+    void Start()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+
+        SetupStateMachine();
+
+        // TODO Esto habra que llamarlo desde otro lado con alguna config probablemente
+        Init();
+
+    }
+
     #region StateMachine
     void SetupStateMachine()
     {
         _stateMachine = new SimpleStateMachine();
         _waitForInputState = new WaitForInput(this);
         _inMovementState = new InPlayerMovementState(this);
-
-    }
-
-    public void OnInputFinished()
-    {
-        Shoot();
-        _stateMachine.ChangeState(_inMovementState);
     }
 
     public void PlayerStopMoving()
@@ -62,17 +64,14 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    void SetupGestures()
+    private void PanFinished(BlastyEventData ev)
     {
-        _metaGesture = GetComponent<MetaGesture>();
-    }
+        var shootEv = (ShootEventData) ev;
 
-    public void OnGestureStateChanged(Gesture sender)
-    {
-        //Debug.Log(sender.State);
-        if (OnInputChangedEvent != null)
+        if (shootEv.ValidShot)
         {
-            OnInputChangedEvent(sender.State, sender.ScreenPosition);
+            Shoot();
+            _stateMachine.ChangeState(_inMovementState);
         }
     }
 
@@ -83,12 +82,14 @@ public class PlayerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         
         SetupStateMachine();
-        SetupGestures();
         _cameraController = FindObjectOfType<GolfCameraController>();
         ResetToPosition(InitialPosition.position);
-        ResetRotation(InitialPosition.rotation);
         _stateMachine.ChangeState(_waitForInputState);
         _cameraController.SetInitialCamera();
+
+        StopAllForces();
+
+        EventManager.Instance.StartListening(ShootEvent.EventName, PanFinished);
     }
 
 	
@@ -103,7 +104,7 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKeyUp(KeyCode.R))
         {
-            Init();
+            StopAllForces();
         }
     }
 
@@ -111,23 +112,25 @@ public class PlayerController : MonoBehaviour
     {
         StopAllForces();
         transform.position = pos;
+        ResetRotation();
     }
 
-    public void ResetRotation(Quaternion rotation)
+    public void ResetRotation()
     {
-        transform.localRotation = rotation;
+        transform.localRotation = Quaternion.identity;
     }
 
     void StopAllForces()
     {
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.angularVelocity = Vector3.zero;
+        ResetRotation();
     }
 
     void Shoot()
     {
         var shootPower = _minShootPower + ((_maxShootPower - _minShootPower) * _trajectoryLine.Power);
-        Debug.Log("SHOOT POWER " + _trajectoryLine.Power + "   FINAL " + shootPower);
+        //Debug.Log("SHOOT POWER " + _trajectoryLine.Power + "   FINAL " + shootPower);
         _rigidbody.AddForce(_trajectoryLine.GetAimingDirection() * shootPower, ForceMode.Impulse);
 
         if (OnShoot != null)
@@ -147,4 +150,10 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    private void OnDestroy()
+    {
+                
+        // TODO move it somewhere else
+        EventManager.Instance.ResetAllEvents();
+    }
 }

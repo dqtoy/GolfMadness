@@ -1,5 +1,7 @@
-﻿using TouchScript.Gestures;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Xml.Schema;
+using BlastyEvents;
 using UnityEngine;
 
 public class TrajectoryLine : MonoBehaviour
@@ -23,16 +25,16 @@ public class TrajectoryLine : MonoBehaviour
     [SerializeField] float _directionAngleIncrement;
     [SerializeField] float _maxVerticalSizeScreenPercentage;
     [SerializeField] float _maxVerticalScale;
-
-    List<TrajectoryStepData> _trajectorySteps = new List<TrajectoryStepData>();
+    [SerializeField] float _minPowerToShoot = 0.1f;
 
     private int reboundLayerMask;
 
     Vector2 _initialDragPosition;
     Vector3 _initialPosition;
-    float _curPower;
+    [SerializeField] private float _curPower;
 
     Vector2 _onScreenInitialDirection;
+    private Vector2 _startBallForwardDirection;
     float _initialYRotation;
 
     public float Power { get { return _curPower; } }
@@ -43,37 +45,68 @@ public class TrajectoryLine : MonoBehaviour
         ResetRotation();
         _initialPosition = transform.localPosition;
         FinishAiming();
+        
+        EventManager.Instance.StartListening(TouchEvent.EventName, OnPanUpdated);
+        EventManager.Instance.StartListening(ShootEvent.EventName, PanFinished);
+    }
+
+    private void PanFinished(BlastyEventData ev)
+    {
+        var shootEv = (ShootEventData) ev;
+
+        if (shootEv.ValidShot)
+        {
+            ResetRotation();
+            FinishAiming();
+        }
+    }
+
+
+    private void OnPanUpdated(BlastyEventData ev)
+    {
+        var touchEventData = (TouchEventData) ev;
+
+        if (touchEventData.PanType == TouchManager.PanType.World)
+            return;
+        
+        switch (touchEventData.TouchState)
+        {
+            case TouchManager.TouchState.InitPan:
+                _initialDragPosition = touchEventData.CurPosition;
+                StartNewAiming();
+                GetInitialDirectionOnScreenSpace();
+                break;
+            case TouchManager.TouchState.UpdatePan:
+                MoveDirectionArrow(touchEventData);
+                UpdateArrowSize(touchEventData.CurPosition);
+                break;
+            case TouchManager.TouchState.FinishPan:
+                if (_curPower < _minPowerToShoot)
+                    return;
+            
+                var shootEventData = new ShootEventData();
+                shootEventData.ValidShot = true;
+                shootEventData.Power = 10f;
+            
+                EventManager.Instance.TriggerEvent(ShootEvent.EventName, shootEventData);
+
+                break;
+        }
     }
 
     public void StartNewAiming()
     {
+        var startPoint = Camera.main.WorldToScreenPoint(_playerController.transform.position);
+        var endPoint = Camera.main.WorldToScreenPoint(_playerController.transform.position + 
+                                                         _playerController.transform.forward );
+
+        _startBallForwardDirection = (endPoint - startPoint).normalized;
         gameObject.SetActive(true);
     }
 
     public void FinishAiming()
     {
         gameObject.SetActive(false);
-    }
-
-    public void OnGestureStateChanged(Gesture sender)
-    {
-        switch(sender.State)
-        {
-            case Gesture.GestureState.Began:
-                _initialDragPosition = sender.ScreenPosition;
-                GetInitialDirectionOnScreenSpace();
-                break;
-            case Gesture.GestureState.Changed:
-                MoveDirectionArrow((_initialDragPosition - sender.ScreenPosition).normalized);
-                UpdateArrowSize(sender.ScreenPosition);
-                break;
-            case Gesture.GestureState.Ended:
-            case Gesture.GestureState.Failed:
-            case Gesture.GestureState.Cancelled:
-                ResetRotation();
-                break;
-
-        }
     }
 
     void GetInitialDirectionOnScreenSpace()
@@ -103,27 +136,21 @@ public class TrajectoryLine : MonoBehaviour
         //Debug.Log("DISTANCE " + verticalPercentage + "  SIZE " + verticalPercentage * _maxVerticalScale * -1f);
     }
 
-    void MoveDirectionArrow(Vector2 curDirection)
+    
+    void MoveDirectionArrow(TouchEventData touchEventData)
     {
-        var angles = Vector2.SignedAngle(curDirection, _onScreenInitialDirection);
-        var dotProduct = Vector2.Dot(curDirection, _onScreenInitialDirection);
-
-        //Debug.Log("ANGLE " + angles + "  DOT " + dotProduct);
+        var angles = Vector2.SignedAngle(touchEventData.CurDirection, _startBallForwardDirection);
+        angles *= _directionAngleIncrement;
+        angles += 180f;
+        //Debug.Log("ANGLES " + angles + "   DOT PROD " + dotProduct);
         
-        transform.localRotation = Quaternion.Euler(0f, _initialYRotation + angles, 0f);
-        //transform.localRotation *= Quaternion.Euler(0f, deltaIncrement.x * _directionAngleIncrement, 0f);
+        transform.localRotation = Quaternion.Euler(0f, transform.localRotation.y + angles, 0f);
     }
 
     private Vector3 _originDirPos, _endDirPos;
     public Vector3 GetAimingDirection()
     {
-        _originDirPos = _startDummy.transform.position;
-        _originDirPos.y = CollisionHeight;
-
-        _endDirPos = _endDummy.transform.position;
-        _endDirPos.y = CollisionHeight;
-        
-        return (_originDirPos - _endDirPos).normalized;
+        return (_startDummy.transform.position - _endDummy.transform.position).normalized;
     }
 
     void ResetRotation()

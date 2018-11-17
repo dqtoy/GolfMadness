@@ -102,8 +102,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
-  TargetPositionOffset: {x: 0, y: 1.61, z: 0}
-  CameraPositionOffset: {x: 0, y: 3.14, z: -4.75}
+  TargetPositionOffset: {x: 0, y: 2.91, z: 0}
+  CameraPositionOffset: {x: 0, y: 5.34, z: -10.74}
   lerpValue: 0.74
   MinSpeed: 0.219
 --- !u!114 &114668733083008826

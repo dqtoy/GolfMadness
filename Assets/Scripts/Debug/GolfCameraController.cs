@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using TouchScript.Gestures;
+﻿using BlastyEvents;
+using UnityEngine;
 
 public class GolfCameraController : MonoBehaviour
 {
@@ -23,9 +23,43 @@ public class GolfCameraController : MonoBehaviour
         _initialPosition = transform.localPosition;
         _targetRigidbody = Target.GetComponent<Rigidbody>();
 
+        EventManager.Instance.StartListening(TouchEvent.EventName, OnPanUpdated);
         SetInitialCamera();
     }
 
+    private void OnPanUpdated(BlastyEventData ev)
+    {
+        var touchEventData = (TouchEventData) ev;
+
+        if (touchEventData.PanType == TouchManager.PanType.Player)
+        {
+            TryUpdateRotationBecauseOfAimingLimit(touchEventData.CurDirection);
+            return;
+        }
+        
+        switch (touchEventData.TouchState)
+        {
+            case TouchManager.TouchState.InitPan:
+                //_initialDragPosition = sender.ScreenPosition;
+                //GetInitialDirectionOnScreenSpace();
+                break;
+            case TouchManager.TouchState.UpdatePan:
+                RotateCameraAroundPlayer(touchEventData.DeltaIncrement);
+                break;
+            case TouchManager.TouchState.FinishPan:
+                //ResetRotation();
+                break;
+        }
+    }
+
+    void TryUpdateRotationBecauseOfAimingLimit(Vector2 curDirection)
+    {
+        if (curDirection.y > -0.2f)
+        {
+            RotateCameraAroundPlayer(new Vector2(-curDirection.x, curDirection.y));
+        }
+    }
+    
     void Update ()
     {
         if (_targetRigidbody.velocity.magnitude > MinSpeed || _targetRigidbody.angularVelocity.magnitude > MinSpeed)
@@ -48,31 +82,8 @@ public class GolfCameraController : MonoBehaviour
         transform.localPosition = Vector3.SmoothDamp(transform.localPosition, Target.transform.position + CameraPositionOffset, ref velocity, lerpValue);
     }
 
-    public void OnGestureStateChanged(Gesture sender)
+    void RotateCameraAroundPlayer(Vector2 deltaIncrement)
     {
-        switch (sender.State)
-        {
-            case Gesture.GestureState.Began:
-                //_initialDragPosition = sender.ScreenPosition;
-                //GetInitialDirectionOnScreenSpace();
-                break;
-            case Gesture.GestureState.Changed:
-                RotateCameraAroundPlayer(sender);
-                //MoveDirectionArrow((_initialDragPosition - sender.ScreenPosition).normalized);
-                //UpdateArrowSize(sender.ScreenPosition);
-                break;
-            case Gesture.GestureState.Ended:
-            case Gesture.GestureState.Failed:
-            case Gesture.GestureState.Cancelled:
-                //ResetRotation();
-                break;
-
-        }
-    }
-
-    void RotateCameraAroundPlayer(Gesture sender)
-    {
-        var increment = sender.ScreenPosition.x - sender.PreviousScreenPosition.x;
-        transform.RotateAround(Target.transform.position, Vector3.up, increment);
+        transform.RotateAround(Target.transform.position, Vector3.up, deltaIncrement.x);
     }
 }

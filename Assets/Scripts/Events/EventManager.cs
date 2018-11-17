@@ -1,59 +1,70 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
-using System.Collections;
 using System.Collections.Generic;
+using BlastyEvents;
 
-
-public class EventManager : MonoBehaviour
+public class EventManager
 {
-    public static EventManager Instance;
-
-    private Dictionary<string, GameEvent> _eventDictionary;
-
-    private void Awake()
+    static EventManager _instance;
+    private Dictionary<string, BlastyEvent> _eventDictionary;
+    
+    public static EventManager Instance
     {
-        if (Instance == null)
+        get
         {
-            Instance = this;
-            _eventDictionary = new Dictionary<string, GameEvent>();
+            if(_instance == null)
+            {
+                _instance = new EventManager();
+                _instance._eventDictionary = new Dictionary<string, BlastyEvent>();
+            }
+
+            return _instance;
         }
-        else if (Instance != this)
-            Destroy(gameObject);
-
-        DontDestroyOnLoad(gameObject);
     }
 
-    public static void RegisterEvent(string eventName, GameEvent gameEvent)
+    public void RegisterEvent(BlastyEvent blastyEvent)
     {
-        Instance._eventDictionary.Add(eventName, gameEvent);
+        _eventDictionary.Add(blastyEvent.GetEventName(), blastyEvent);
     }
 
-    public static void StartListening(string eventName, UnityAction<GameEventData> listener)
+    public void UnRegisterEvent(BlastyEvent blastyEvent)
     {
-        GameEvent thisEvent = null;
-        if (Instance._eventDictionary.TryGetValue(eventName, out thisEvent))
+        if(_eventDictionary.ContainsKey(blastyEvent.GetEventName()))
+        {
+            _eventDictionary.Remove(blastyEvent.GetEventName());
+        }
+    }
+    
+    public void StartListening(string eventName, UnityAction<BlastyEventData> listener)
+    {
+        BlastyEvent thisEvent = null;
+        if (_eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.AddListener(listener);
         }
-
     }
 
-    public static void StopListening(string eventName, UnityAction<GameEventData> listener)
+    public void StopListening(string eventName, UnityAction<BlastyEventData> listener)
     {
         if (Instance == null) return;
-        GameEvent thisEvent = null;
-        if (Instance._eventDictionary.TryGetValue(eventName, out thisEvent))
+        BlastyEvent thisEvent = null;
+        if (_eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.RemoveListener(listener);
         }
     }
 
-    public static void TriggerEvent(string eventName, GameEventData arg = null)
+    public void TriggerEvent(string eventName, BlastyEventData arg = null)
     {
-        GameEvent thisEvent = null;
-        if (Instance._eventDictionary.TryGetValue(eventName, out thisEvent))
+        BlastyEvent thisEvent = null;
+        if (_eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.Invoke(arg);
         }
+    }
+
+    public void ResetAllEvents()
+    {
+        _eventDictionary.Clear();
     }
 }
