@@ -87,11 +87,10 @@ public class PlayerController : MonoBehaviour
         
         SetupStateMachine();
         _cameraController = FindObjectOfType<GolfCameraController>();
-        ResetToPosition(InitialPosition.position);
+        StopAllForces();
+        ResetToPosition(InitialPosition);
         _stateMachine.ChangeState(_waitForInputState);
         _cameraController.SetInitialCamera();
-
-        StopAllForces();
 
         EventManager.Instance.StartListening(ShootEvent.EventName, PanFinished);
     }
@@ -120,11 +119,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void ResetToPosition(Vector3 pos)
+    public void ResetToPosition(Transform initialPosition)
     {
         StopAllForces();
-        transform.position = pos;
-        ResetRotation();
+        transform.position = initialPosition.position;
+        transform.localRotation = initialPosition.rotation;
+        //ResetRotation();
     }
 
     public void ResetRotation()

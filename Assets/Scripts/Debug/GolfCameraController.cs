@@ -100,6 +100,7 @@ public class GolfCameraController : MonoBehaviour
 
     public void SetInitialCamera()
     {
+        transform.rotation = Target.transform.rotation;
         var targetPosition = Target.transform.localPosition + TargetPositionOffset;
         transform.localPosition = Target.transform.position + CameraPositionOffset;
         transform.LookAt(targetPosition);

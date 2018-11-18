@@ -11,7 +11,18 @@ public class ElementalGiverByCollision : ElementalDebug
 		{
 			absorber.CurrentElement = CurrentElement;
 		}
-
+ 
 		base.CollisionableCollisionEnter(other);
+	}
+
+	protected override void CollisionableTriggerEnter(Collider other)
+	{
+		var absorber = other.gameObject.GetComponent<ElementalAbsorber>();
+		if (absorber != null)
+		{
+			absorber.CurrentElement = CurrentElement;
+		}
+ 
+		base.CollisionableTriggerEnter(other);
 	}
 }
