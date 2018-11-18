@@ -6,19 +6,8 @@ using UnityEngine;
 
 public class TrajectoryLine : MonoBehaviour
 {
-    public class TrajectoryStepData
-    {
-        public Vector3 originPoint;
-        public Vector3 endPoint;
-        public Vector3 direction;
-        public float distance;
-    }
-
-    public float MaxLineLength = 10f;
-    public int MaxReboundTries = 5;
-    public float CollisionHeight = 0.25f;
-
     [SerializeField] private PlayerController _playerController;
+    [SerializeField] TextMesh _powerText;
     [SerializeField] private GameObject _startDummy;
     [SerializeField] private GameObject _endDummy;
     [SerializeField] private GameObject _arrowModel;
@@ -104,11 +93,13 @@ public class TrajectoryLine : MonoBehaviour
 
         _startBallForwardDirection = (endPoint - startPoint).normalized;
         gameObject.SetActive(true);
+        _powerText.gameObject.SetActive(true);
     }
 
     public void FinishAiming()
     {
         gameObject.SetActive(false);
+        _powerText.gameObject.SetActive(false);
     }
 
     void GetInitialDirectionOnScreenSpace()
@@ -131,7 +122,7 @@ public class TrajectoryLine : MonoBehaviour
 
         verticalPercentage = Mathf.Clamp(verticalPercentage, 0f, _maxVerticalSizeScreenPercentage);
         _curPower = (verticalPercentage / _maxVerticalSizeScreenPercentage);
-
+        _powerText.text = (_curPower * 100).ToString("0");
 
         var finalSize = verticalPercentage * _maxVerticalScale;
         _arrowModel.transform.localScale = new Vector3(1f + finalSize, 1f + finalSize, 1 + finalSize);
