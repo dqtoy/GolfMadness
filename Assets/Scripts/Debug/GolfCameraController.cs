@@ -1,5 +1,6 @@
 ﻿using BlastyEvents;
 using UnityEngine;
+using UnityEngine.iOS;
 
 public class GolfCameraController : MonoBehaviour
 {
@@ -7,6 +8,12 @@ public class GolfCameraController : MonoBehaviour
     [SerializeField] Vector3 TargetPositionOffset;
     [SerializeField] Vector3 CameraPositionOffset;
 
+    [SerializeField] private float MinCameraHeight = 3f;
+    [SerializeField] private float MaxCameraHeight = 35f;
+    
+    [SerializeField] Vector3 CameraPositionOffsetMin;
+    [SerializeField] Vector3 CameraPositionOffsetMax;
+    
     [Range(0,10)]
     [SerializeField] float lerpValue = 1;
 
@@ -20,6 +27,16 @@ public class GolfCameraController : MonoBehaviour
     private Rigidbody _targetRigidbody;
 
     private TrajectoryLine _trajectoryLine;
+
+    [SerializeField] private float _zoom;
+    [SerializeField] private float InitialZoom = 0.3f;
+    [SerializeField] private float ZoomSpeed = 30f;
+    
+    public float Zoom
+    {
+        get { return _zoom; }
+        set { _zoom = Mathf.Clamp(value, 0f, 1f); }
+    }
     
     void Start ()
     {
@@ -27,7 +44,9 @@ public class GolfCameraController : MonoBehaviour
         _targetRigidbody = Target.GetComponent<Rigidbody>();
 
         EventManager.Instance.StartListening(TouchEvent.EventName, OnPanUpdated);
-        SetInitialCamera();
+
+        _zoom = InitialZoom;
+        RotateCameraAroundPlayer(Vector2.zero);
     }
 
     public void Init(GameObject initPosition, TrajectoryLine trajectoryLine)
@@ -74,7 +93,7 @@ public class GolfCameraController : MonoBehaviour
     {
         if (_targetRigidbody.velocity.magnitude > MinSpeed || _targetRigidbody.angularVelocity.magnitude > MinSpeed)
         {
-            UpdateCamera();
+            UpdateMovementCamera();
         }
     }
 
@@ -85,16 +104,29 @@ public class GolfCameraController : MonoBehaviour
         transform.LookAt(targetPosition);
     }
 
-    void UpdateCamera()
+    void UpdateMovementCamera()
     {
         var targetPosition = Target.transform.localPosition + TargetPositionOffset;
         transform.LookAt(targetPosition);
         transform.localPosition = Vector3.SmoothDamp(transform.localPosition, Target.transform.position + CameraPositionOffset, ref velocity, lerpValue);
     }
 
-    void RotateCameraAroundPlayer(Vector2 deltaIncrement)
+    public void RotateCameraAroundPlayer(Vector2 deltaIncrement)
     {
         var increment = deltaIncrement.x * CameraRotationSpeed * Time.deltaTime;
         transform.RotateAround(Target.transform.position, Vector3.up, increment);
+
+        var incrementY = (deltaIncrement.y / Screen.height) * Time.deltaTime * ZoomSpeed;
+        Zoom =  Zoom + incrementY;
+
+        CameraPositionOffset.y = MinCameraHeight + (MaxCameraHeight - MinCameraHeight) * Zoom;
+        
+        var targetPosition = Target.transform.localPosition + TargetPositionOffset;
+        transform.LookAt(targetPosition);
+        var newPosition = transform.localPosition;
+        newPosition.y = Mathf.Lerp(transform.localPosition.y, 
+                                             (Target.transform.position + CameraPositionOffset).y, 0.8f);
+        transform.localPosition = newPosition;
     }
+
 }

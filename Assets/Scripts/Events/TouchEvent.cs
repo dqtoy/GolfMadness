@@ -20,5 +20,6 @@ namespace BlastyEvents
         public Vector2 CurPosition;
         public TouchManager.PanType PanType;
         public Vector2 CurDirection;
+        public float TotalPanScreenPercentageSize;
     }
 }

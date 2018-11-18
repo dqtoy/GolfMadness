@@ -25,14 +25,15 @@ public class TrajectoryLine : MonoBehaviour
     [SerializeField] float _directionAngleIncrement;
     [SerializeField] float _maxVerticalSizeScreenPercentage;
     [SerializeField] float _maxVerticalScale;
-    [SerializeField] float _minPowerToShoot = 0.1f;
+    [SerializeField] float _minPowerToShoot = 0.02f;
 
     private int reboundLayerMask;
 
     Vector2 _initialDragPosition;
     Vector3 _initialPosition;
     [SerializeField] private float _curPower;
-
+    [SerializeField] private float _minScreenPercentageToMove = 0.1f;
+    
     Vector2 _onScreenInitialDirection;
     private Vector2 _startBallForwardDirection;
     float _initialYRotation;
@@ -81,6 +82,7 @@ public class TrajectoryLine : MonoBehaviour
                 UpdateArrowSize(touchEventData.CurPosition);
                 break;
             case TouchManager.TouchState.FinishPan:
+                FinishAiming();
                 if (_curPower < _minPowerToShoot)
                     return;
             
@@ -139,6 +141,13 @@ public class TrajectoryLine : MonoBehaviour
     
     void MoveDirectionArrow(TouchEventData touchEventData)
     {
+        Debug.Log("DISTANCE : " + touchEventData.TotalPanScreenPercentageSize);
+
+        if (touchEventData.TotalPanScreenPercentageSize < _minScreenPercentageToMove)
+        {
+            return;
+        }
+        
         var angles = Vector2.SignedAngle(touchEventData.CurDirection, _startBallForwardDirection);
         angles *= _directionAngleIncrement;
         angles += 180f;

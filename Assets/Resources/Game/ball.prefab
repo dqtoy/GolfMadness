@@ -473,6 +473,7 @@ MonoBehaviour:
   _maxVerticalScale: 3
   _minPowerToShoot: 0.1
   _curPower: 0
+  _minScreenPercentageToMove: 0.016
 --- !u!114 &114933939561043904
 MonoBehaviour:
   m_ObjectHideFlags: 1

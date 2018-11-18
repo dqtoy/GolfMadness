@@ -103,6 +103,14 @@ MonoBehaviour:
   Target: {fileID: 0}
   TargetPositionOffset: {x: 0, y: 2.91, z: 0}
   CameraPositionOffset: {x: 0, y: 5.34, z: -10.74}
+  MinCameraHeight: 3
+  MaxCameraHeight: 18
+  CameraPositionOffsetMin: {x: 0, y: 0, z: 0}
+  CameraPositionOffsetMax: {x: 0, y: 0, z: 0}
   lerpValue: 0.74
   MinSpeed: 0.219
   CameraRotationSpeed: 40
+  _zoom: 0
+  InitialZoom: 0.15
+  ZoomSpeed: 40
+  _minScreenPercentageToMove: 0.05

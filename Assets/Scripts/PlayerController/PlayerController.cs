@@ -35,6 +35,9 @@ public class PlayerController : MonoBehaviour
 
     public float MinValidMovementSpeed { get { return _minValidSpeed; } }
 
+    private Vector3 _prevPositionToShoot;
+    private Quaternion _prevPositionToRotation;
+    
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -99,6 +102,14 @@ public class PlayerController : MonoBehaviour
         _stateMachine.Update();
 
         UpdateFakeInput();
+
+        if (transform.position.y < -4f)
+        {
+            transform.position = _prevPositionToShoot;
+            transform.rotation = _prevPositionToRotation;
+            StopAllForces();
+            _cameraController.RotateCameraAroundPlayer(Vector2.zero);
+        }
 	}
 
     void UpdateFakeInput()
@@ -130,6 +141,9 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
+        _prevPositionToShoot = transform.localPosition;
+        _prevPositionToRotation = transform.localRotation;
+        
         _rigidbody.isKinematic = false;
         var shootPower = _minShootPower + ((_maxShootPower - _minShootPower) * _trajectoryLine.Power);
         //Debug.Log("SHOOT POWER " + _trajectoryLine.Power + "   FINAL " + shootPower);

@@ -23,7 +23,10 @@ public class InPlayerMovementState : IState
     public void Execute()
     {
         //Debug.Log("SPEED MAGNITUDE " + _playerRigidbody.velocity.magnitude);
-        if(_playerRigidbody.velocity.magnitude <= _playerController.MinValidMovementSpeed)
+        var isSlowVelocity = _playerRigidbody.velocity.magnitude <= _playerController.MinValidMovementSpeed;
+        var isSlowAngularVelocity = _playerRigidbody.angularVelocity.magnitude <= _playerController.MinValidMovementSpeed;
+        
+        if(isSlowVelocity || (isSlowAngularVelocity && isSlowVelocity))
         {
             ++_ticksWithSpeedZero;
 

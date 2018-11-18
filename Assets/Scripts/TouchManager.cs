@@ -108,7 +108,9 @@ public class TouchManager : MonoBehaviour
         touchEventData.InitPosition = _initPanPosition;
         touchEventData.PanType = _panType;
         touchEventData.CurDirection = (_curPanPosition - _initPanPosition).normalized;
-         
+        touchEventData.TotalPanScreenPercentageSize =
+            Vector2.Distance(_initPanPosition, _curPanPosition) / Screen.height;
+             
         EventManager.Instance.TriggerEvent(TouchEvent.EventName, touchEventData);
     }
 }
