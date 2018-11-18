@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Destroy3Colors.unity
     guid: 37218999244cfd745b9b0e95919f7ce8
+  - enabled: 1
+    path: Assets/Scenes/Accuracy.unity
+    guid: 982dc882cb193374a9c824f7166110d5
+  - enabled: 1
+    path: Assets/Scenes/Destroy3Colors_2.unity
+    guid: ccd43f79f6e20df4fb668fef14542574
   m_configObjects: {}
