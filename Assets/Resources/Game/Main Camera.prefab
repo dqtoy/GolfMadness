@@ -109,8 +109,8 @@ MonoBehaviour:
   CameraPositionOffsetMax: {x: 0, y: 0, z: 0}
   lerpValue: 0.74
   MinSpeed: 0.219
-  CameraRotationSpeed: 40
+  CameraRotationSpeed: 9
   _zoom: 0
   InitialZoom: 0.15
-  ZoomSpeed: 40
-  _minScreenPercentageToMove: 0.05
+  ZoomSpeed: 30
+  MinScreenPercentageForRotation: {x: 0.003, y: 0.003}

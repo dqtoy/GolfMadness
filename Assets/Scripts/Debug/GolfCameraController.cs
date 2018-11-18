@@ -1,6 +1,5 @@
 ﻿using BlastyEvents;
 using UnityEngine;
-using UnityEngine.iOS;
 
 public class GolfCameraController : MonoBehaviour
 {
@@ -31,6 +30,8 @@ public class GolfCameraController : MonoBehaviour
     [SerializeField] private float _zoom;
     [SerializeField] private float InitialZoom = 0.3f;
     [SerializeField] private float ZoomSpeed = 30f;
+
+    [SerializeField] private Vector2 MinScreenPercentageForRotation;
     
     public float Zoom
     {
@@ -113,14 +114,20 @@ public class GolfCameraController : MonoBehaviour
 
     public void RotateCameraAroundPlayer(Vector2 deltaIncrement)
     {
-        var increment = deltaIncrement.x * CameraRotationSpeed * Time.deltaTime;
-        transform.RotateAround(Target.transform.position, Vector3.up, increment);
 
-        var incrementY = (deltaIncrement.y / Screen.height) * Time.deltaTime * ZoomSpeed;
-        Zoom =  Zoom + incrementY;
+        if ((Mathf.Abs(deltaIncrement.x) / Screen.width) > MinScreenPercentageForRotation.x)
+        {
+            var increment = deltaIncrement.x * CameraRotationSpeed * Time.deltaTime;
+            transform.RotateAround(Target.transform.position, Vector3.up, increment);
+        }
 
-        CameraPositionOffset.y = MinCameraHeight + (MaxCameraHeight - MinCameraHeight) * Zoom;
-        
+        if ((Mathf.Abs(deltaIncrement.y) / Screen.height) > MinScreenPercentageForRotation.y)
+        {
+            var incrementY = (deltaIncrement.y / Screen.height) * Time.deltaTime * ZoomSpeed;
+            Zoom = Zoom + incrementY;
+            CameraPositionOffset.y = MinCameraHeight + (MaxCameraHeight - MinCameraHeight) * Zoom;
+        }
+
         var targetPosition = Target.transform.localPosition + TargetPositionOffset;
         transform.LookAt(targetPosition);
         var newPosition = transform.localPosition;

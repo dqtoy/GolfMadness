@@ -469,8 +469,8 @@ MonoBehaviour:
   _endDummy: {fileID: 1744699080729500}
   _arrowModel: {fileID: 1832840120720970}
   _directionAngleIncrement: 1
-  _maxVerticalSizeScreenPercentage: 0.3
-  _maxVerticalScale: 3
+  _maxVerticalSizeScreenPercentage: 0.12
+  _maxVerticalScale: 20
   _minPowerToShoot: 0.1
   _curPower: 0
   _minScreenPercentageToMove: 0.016

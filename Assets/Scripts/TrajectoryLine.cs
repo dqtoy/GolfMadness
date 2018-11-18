@@ -141,7 +141,7 @@ public class TrajectoryLine : MonoBehaviour
     
     void MoveDirectionArrow(TouchEventData touchEventData)
     {
-        Debug.Log("DISTANCE : " + touchEventData.TotalPanScreenPercentageSize);
+        //Debug.Log("DISTANCE : " + touchEventData.TotalPanScreenPercentageSize);
 
         if (touchEventData.TotalPanScreenPercentageSize < _minScreenPercentageToMove)
         {
