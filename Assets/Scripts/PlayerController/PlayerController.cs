@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _minShootPower;
     [SerializeField] float _maxShootPower;
     [SerializeField] float _minValidSpeed;
+    [SerializeField] float _angularSpeedMultiplier = 1f;
 
     SimpleStateMachine _stateMachine;
     private Rigidbody _rigidbody;
@@ -111,6 +112,13 @@ public class PlayerController : MonoBehaviour
         }
 	}
 
+    private void OnGUI()
+    {
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("angular spd: " + _rigidbody.angularVelocity);
+        GUILayout.EndHorizontal();
+    }
+
     void UpdateFakeInput()
     {
         if(Input.GetKeyUp(KeyCode.R))
@@ -148,6 +156,10 @@ public class PlayerController : MonoBehaviour
         var shootPower = _minShootPower + ((_maxShootPower - _minShootPower) * _trajectoryLine.Power);
         //Debug.Log("SHOOT POWER " + _trajectoryLine.Power + "   FINAL " + shootPower);
         _rigidbody.AddForce(_trajectoryLine.GetAimingDirection() * shootPower, ForceMode.Impulse);
+
+        _rigidbody.maxAngularVelocity = _maxShootPower * 10f;
+        var rotatingAxis = Vector3.Cross(Vector3.up, _trajectoryLine.GetAimingDirection());
+        _rigidbody.angularVelocity = rotatingAxis * shootPower * _angularSpeedMultiplier;
 
         if (OnShoot != null)
         {

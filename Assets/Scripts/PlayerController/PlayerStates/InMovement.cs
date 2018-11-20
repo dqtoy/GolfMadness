@@ -7,7 +7,7 @@ public class InPlayerMovementState : IState
     PlayerController _playerController;
     Rigidbody _playerRigidbody;
 
-    int _ticksWithSpeedZero;
+    float _timeWithSpeedZero;
 
     public InPlayerMovementState(PlayerController playerController)
     {
@@ -17,7 +17,7 @@ public class InPlayerMovementState : IState
 
     public void Enter()
     {
-        _ticksWithSpeedZero = 0;
+        _timeWithSpeedZero = 0f;
     }
 
     public void Execute()
@@ -26,11 +26,11 @@ public class InPlayerMovementState : IState
         var isSlowVelocity = _playerRigidbody.velocity.magnitude <= _playerController.MinValidMovementSpeed;
         var isSlowAngularVelocity = _playerRigidbody.angularVelocity.magnitude <= _playerController.MinValidMovementSpeed;
         
-        if(isSlowVelocity || (isSlowAngularVelocity && isSlowVelocity))
+        if(/*isSlowVelocity ||*/ (isSlowAngularVelocity && isSlowVelocity))
         {
-            ++_ticksWithSpeedZero;
+            _timeWithSpeedZero += Time.deltaTime;
 
-            if (_ticksWithSpeedZero > 3)
+            if (_timeWithSpeedZero > 0.1f)
             {
                 _playerController.PlayerStopMoving();
             }
