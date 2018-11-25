@@ -14,16 +14,49 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ElementsSandbox.unity
     guid: 09b0d165ab2644be6a72af61601ece18
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LevelTest_Toni.unity
     guid: 0b0444630bcf9452093141907e495a2c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Destroy3Colors.unity
     guid: 37218999244cfd745b9b0e95919f7ce8
   - enabled: 1
     path: Assets/Scenes/Accuracy.unity
     guid: 982dc882cb193374a9c824f7166110d5
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Destroy3Colors_2.unity
     guid: ccd43f79f6e20df4fb668fef14542574
+  - enabled: 1
+    path: Assets/Scenes/Level1_Tutorial.unity
+    guid: ad03b2a2ec1094a028830006ffa48522
+  - enabled: 1
+    path: Assets/Scenes/MovingPlatforms.unity
+    guid: 57e2d1e5bb77bc44ab2f8f010bf06e33
+  - enabled: 1
+    path: Assets/Scenes/Level_MovingMagnets.unity
+    guid: 249d2162bc7f25c4984859c84c9063f4
+  - enabled: 1
+    path: Assets/Scenes/Level_2Ways.unity
+    guid: cb79f9fc146f3e9428976af5e844d1ee
+  - enabled: 1
+    path: Assets/Scenes/Level_HalfPipe.unity
+    guid: e999cf6ac43a8824f914bc05a395d233
+  - enabled: 1
+    path: Assets/Scenes/Level_Labrinth.unity
+    guid: b161103a81a8e1b4e846b01901aa4db6
+  - enabled: 1
+    path: Assets/Scenes/ReboundDown.unity
+    guid: e83954d479e8fd34a96bfc008312f624
+  - enabled: 1
+    path: Assets/Scenes/Level_Toni_Speeders.unity
+    guid: 63116d6a687c64dfab5423bfc7dc6165
+  - enabled: 1
+    path: Assets/Scenes/Level_Loop.unity
+    guid: 5ecbe10d2a83a114fa8c25276ba61b76
+  - enabled: 1
+    path: Assets/Scenes/Level_Toni_BombSpawner.unity
+    guid: 8529192bf685a43c0a6adceb5829b7cb
+  - enabled: 1
+    path: Assets/Scenes/Level_Space.unity
+    guid: 153cbbf082e46bf4da1cda568c9ec7b5
   m_configObjects: {}

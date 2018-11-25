@@ -11,6 +11,8 @@ public class Bouncer : Elemental
 
     [SerializeField] float WaitBetweenJumps;
     [SerializeField] float JumpAnimationSpeed;
+
+    [SerializeField] bool _overrideForce = true;
     
     Animation _animation;
 
@@ -45,6 +47,10 @@ public class Bouncer : Elemental
                 var rigidbody = hitCollider.gameObject.GetComponent<Rigidbody>();
                 if (rigidbody != null)
                 {
+                    if (_overrideForce)
+                    {
+                        rigidbody.velocity = Vector3.zero;
+                    }
                     rigidbody.AddForce(DirectionTransform.up * Power, ForceMode.Impulse);
                 }
             }

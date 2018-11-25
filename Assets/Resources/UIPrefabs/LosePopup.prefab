@@ -61,6 +61,7 @@ GameObject:
   - component: {fileID: 224391199573708612}
   - component: {fileID: 222888498024292562}
   - component: {fileID: 114545622428351276}
+  - component: {fileID: 114994230784614488}
   m_Layer: 9
   m_Name: Image
   m_TagString: Untagged
@@ -212,7 +213,7 @@ MonoBehaviour:
   m_text: LEVEL FAILED
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 5dbd691698a3747bc9c4ae309cb63775, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -462,7 +463,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 38.45
+  m_fontSize: 38.35
   m_fontSizeBase: 72
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -621,7 +622,7 @@ MonoBehaviour:
   m_text: RETRY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 5dbd691698a3747bc9c4ae309cb63775, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -935,6 +936,20 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114994230784614488
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1357202600594968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!222 &222204520502389374
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -1175,7 +1190,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.04781412, y: 0.47836396}
   m_AnchorMax: {x: 0.95187336, y: 0.8412004}
-  m_AnchoredPosition: {x: 0, y: -0.90000916}
+  m_AnchoredPosition: {x: 0, y: -0.9000244}
   m_SizeDelta: {x: 0, y: 1.9000015}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224741244945750996
@@ -1211,7 +1226,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.06, y: 0.064}
   m_AnchorMax: {x: 0.95000005, y: 0.92684513}
-  m_AnchoredPosition: {x: 0.5, y: 0.20000076}
+  m_AnchoredPosition: {x: 0.5, y: 0.19999695}
   m_SizeDelta: {x: 1, y: 0.39999962}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &225031226444469642

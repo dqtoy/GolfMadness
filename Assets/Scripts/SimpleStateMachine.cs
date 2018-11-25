@@ -16,6 +16,11 @@ public class SimpleStateMachine
     {
         if (currentState != null) currentState.Execute();
     }
+
+    public string CurrentStateName()
+    {
+        return currentState.Name();
+    }
 }
 
 public interface IState
@@ -23,4 +28,6 @@ public interface IState
     void Enter();
     void Execute();
     void Exit();
+
+    string Name();
 }

@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class MissionsManager :MonoBehaviour
+public class MissionsManager
 {
     public enum ObjectiveType
     {
@@ -21,17 +22,18 @@ public class MissionsManager :MonoBehaviour
     }
     
     private Dictionary<ObjectiveCompletion, List<Objective>> _dicObjectives;
-    private Dictionary<ObjectiveCompletion, MissionUIController> _uiControllers;
+    private Dictionary<ObjectiveCompletion, List< MissionUIController>> _uiControllers;
 
     private LevelData _levelData;
 
     public bool MissionsActive;
+
     
     public void InitLevelObjectives()
     {
         MissionsActive = true;
         _levelData = ServicesManager.Instance.CurrentLevel();
-        _uiControllers = new Dictionary<ObjectiveCompletion, MissionUIController>();
+        _uiControllers = new Dictionary<ObjectiveCompletion, List<MissionUIController>>();
         _dicObjectives = new Dictionary<ObjectiveCompletion, List<Objective>>();
         _dicObjectives.Add(ObjectiveCompletion.MAIN, new List<Objective>());
         _dicObjectives.Add(ObjectiveCompletion.SECONDARY_1, new List<Objective>());
@@ -49,11 +51,11 @@ public class MissionsManager :MonoBehaviour
         {
             var objective = objectivesInScene[i];
 
-            if (objective.Type == ObjectiveType.NONE)
+       /*     if (objective.Type == ObjectiveType.NONE)
             {
                 Debug.Log("OBJECT WITHOUT VALID OBJECTIVE :  " + objective.name, objective.gameObject);
                 continue;
-            }
+            }*/
 
             if (!objective.IsInCurrentMission())
             {
@@ -87,7 +89,7 @@ public class MissionsManager :MonoBehaviour
             listObjectives.Remove(objective);
             if (objective.Completion == ObjectiveCompletion.MAIN && listObjectives.Count == 0)
             {
-                LevelPassed();
+                ServicesManager.Instance.UIStackController.ThrowCoroutine(LevelPassedCorroutine());
             }
         }
         else
@@ -98,8 +100,27 @@ public class MissionsManager :MonoBehaviour
         TryUpdateUI(objective.Completion, listObjectives.Count == 0);
     }
 
+    public void ForceWin()
+    {
+        ServicesManager.Instance.UIStackController.ThrowCoroutine(LevelPassedCorroutine()); 
+    }
+
+    public void ForceLose()
+    {
+        SoundManager.Instance.PlayDefat();
+        ServicesManager.Instance.UIStackController.Push("UIPrefabs/LosePopup");
+    }
+    
+    private IEnumerator LevelPassedCorroutine()
+    {
+        yield return null;
+        LevelPassed();
+    }
+
     void LevelPassed()
     {
+        SoundManager.Instance.PlayVictory();
+        
         var completedList = new List<bool>()
         {
             _dicObjectives[ObjectiveCompletion.MAIN].Count == 0,
@@ -122,25 +143,39 @@ public class MissionsManager :MonoBehaviour
     {
         if (_uiControllers.ContainsKey(obj))
         {
-            _uiControllers[obj].UpdateState(completed);
+            for (int i = 0; i < _uiControllers[obj].Count; i++)
+            {
+                if (_uiControllers[obj][i] != null)
+                {
+                    _uiControllers[obj][i].UpdateState(completed);
+                }
+            }
         }
     }
 
     public void InitUI(List<MissionUIController> listUIController)
     {
-        _uiControllers.Add(ObjectiveCompletion.MAIN, listUIController[0]);  
-        _uiControllers.Add(ObjectiveCompletion.SECONDARY_1, listUIController[1]);
-        _uiControllers.Add(ObjectiveCompletion.SECONDARY_2, listUIController[2]);
+        if (!_uiControllers.ContainsKey(ObjectiveCompletion.MAIN))
+        {
+             
+            _uiControllers.Add(ObjectiveCompletion.MAIN, new List<MissionUIController>());  
+            _uiControllers.Add(ObjectiveCompletion.SECONDARY_1, new List<MissionUIController>());
+            _uiControllers.Add(ObjectiveCompletion.SECONDARY_2, new List<MissionUIController>());
+        }
+
+        _uiControllers[ObjectiveCompletion.MAIN].Add(listUIController[0]);  
+        _uiControllers[ObjectiveCompletion.SECONDARY_1].Add(listUIController[1]);  
+        _uiControllers[ObjectiveCompletion.SECONDARY_2].Add(listUIController[2]);  
         
-        _uiControllers[ObjectiveCompletion.MAIN].Init(
+        listUIController[0].Init(
             _dicObjectives[ObjectiveCompletion.MAIN].Count > 0,
             _levelData.MainMissionDescription);
         
-        _uiControllers[ObjectiveCompletion.SECONDARY_1].Init(
+        listUIController[1].Init(
             _dicObjectives[ObjectiveCompletion.SECONDARY_1].Count > 0,
             _levelData.SecondaryMissionDescription);
         
-        _uiControllers[ObjectiveCompletion.SECONDARY_2].Init(
+        listUIController[2].Init(
             _dicObjectives[ObjectiveCompletion.SECONDARY_2].Count > 0,
             _levelData.ThirdMissionDescription);
 

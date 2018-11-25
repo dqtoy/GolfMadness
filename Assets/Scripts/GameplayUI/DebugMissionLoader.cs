@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DebugMissionLoader : LogicComponent
 {
-    [SerializeField] private LevelData _levelData;
+    [SerializeField] public LevelData _levelData;
 
     public override void Initialize()
     {

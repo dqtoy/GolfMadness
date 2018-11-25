@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62a8be64aca974abca85db63b21cefd2, type: 3}
+  m_Name: LevelData_1_Tutorial
+  m_EditorClassIdentifier: 
+  LevelId: 1
+  Order: -10000
+  Index: 0
+  AmountOfTries: -1
+  DeactivateTries: 1
+  Title: Tutorial level
+  MainMissionDescription: Reach the end of the level
+  SecondaryMissionDescription: Get painted red
+  ThirdMissionDescription: Get through the red wall
+  Scene: Level1_Tutorial

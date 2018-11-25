@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UIStackController : UniqueElement
@@ -99,5 +100,10 @@ public class UIStackController : UniqueElement
         }
 
         return _screenParent;
+    }
+
+    public void ThrowCoroutine(IEnumerator coroutine)
+    {
+        StartCoroutine(coroutine);
     }
 }

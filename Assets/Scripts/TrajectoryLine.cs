@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Xml.Schema;
 using BlastyEvents;
@@ -7,7 +8,6 @@ using UnityEngine;
 public class TrajectoryLine : MonoBehaviour
 {
     [SerializeField] private PlayerController _playerController;
-    [SerializeField] TextMesh _powerText;
     [SerializeField] private GameObject _startDummy;
     [SerializeField] private GameObject _endDummy;
     [SerializeField] private GameObject _arrowModel;
@@ -22,6 +22,8 @@ public class TrajectoryLine : MonoBehaviour
     Vector3 _initialPosition;
     [SerializeField] private float _curPower;
     [SerializeField] private float _minScreenPercentageToMove = 0.1f;
+
+    private Action<float> OnPowerChanged;
     
     Vector2 _onScreenInitialDirection;
     private Vector2 _startBallForwardDirection;
@@ -31,6 +33,7 @@ public class TrajectoryLine : MonoBehaviour
 
     void Start()
     {
+        transform.parent = null;
         reboundLayerMask = 1 << 9;
         ResetRotation();
         _initialPosition = transform.localPosition;
@@ -38,6 +41,11 @@ public class TrajectoryLine : MonoBehaviour
         
         EventManager.Instance.StartListening(TouchEvent.EventName, OnPanUpdated);
         EventManager.Instance.StartListening(ShootEvent.EventName, PanFinished);
+    }
+
+    void LateUpdate()
+    {
+        transform.position = _playerController.transform.position;
     }
 
     private void PanFinished(BlastyEventData ev)
@@ -81,6 +89,7 @@ public class TrajectoryLine : MonoBehaviour
             
                 EventManager.Instance.TriggerEvent(ShootEvent.EventName, shootEventData);
 
+                OnPowerChanged(0f);
                 break;
         }
     }
@@ -93,13 +102,11 @@ public class TrajectoryLine : MonoBehaviour
 
         _startBallForwardDirection = (endPoint - startPoint).normalized;
         gameObject.SetActive(true);
-        _powerText.gameObject.SetActive(true);
     }
 
     public void FinishAiming()
     {
         gameObject.SetActive(false);
-        _powerText.gameObject.SetActive(false);
     }
 
     void GetInitialDirectionOnScreenSpace()
@@ -122,7 +129,11 @@ public class TrajectoryLine : MonoBehaviour
 
         verticalPercentage = Mathf.Clamp(verticalPercentage, 0f, _maxVerticalSizeScreenPercentage);
         _curPower = (verticalPercentage / _maxVerticalSizeScreenPercentage);
-        _powerText.text = (_curPower * 100).ToString("0");
+
+        var visualTotal = (_curPower - _minPowerToShoot)/ (1f - _minPowerToShoot);
+        
+        OnPowerChanged(visualTotal);
+        
 
         var finalSize = verticalPercentage * _maxVerticalScale;
         _arrowModel.transform.localScale = new Vector3(1f + finalSize, 1f + finalSize, 1 + finalSize);
@@ -139,17 +150,18 @@ public class TrajectoryLine : MonoBehaviour
             return;
         }
         
-        var angles = Vector2.SignedAngle(touchEventData.CurDirection, _startBallForwardDirection);
+        var angles = Vector2.SignedAngle(touchEventData.CurDirection, Vector2.up);
         angles *= _directionAngleIncrement;
         angles += 180f;
-        //Debug.Log("ANGLES " + angles + "   DOT PROD " + dotProduct);
+        //Debug.Log("ANGLES " + angles + "   DOT PROD ");
 
         UpdateRotation(angles);
     }
 
     public void UpdateRotation(float angles)
     {
-        transform.localRotation = Quaternion.Euler(0f, transform.localRotation.y + angles, 0f);
+        var rotation = Vector3.SignedAngle(Vector3.forward, Camera.main.transform.forward, Vector3.up);
+        transform.localRotation = Quaternion.Euler(0f, rotation + angles, 0f);
     }
     
     private Vector3 _originDirPos, _endDirPos;
@@ -162,5 +174,10 @@ public class TrajectoryLine : MonoBehaviour
     {
         transform.localPosition = _initialPosition;
         transform.localRotation = Quaternion.identity;
+    }
+    
+    public void SubscribeToOnPowerChanged(Action<float> subscriber)
+    {
+        OnPowerChanged += subscriber;
     }
 }

@@ -13,10 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelId: 
   Order: 1
-  Index: 0
-  AmountOfTries: 3
+  Index: 3
+  AmountOfTries: 15
+  DeactivateTries: 1
   Title: Accuracy
-  MainMissionDescription: Reach the end!
+  MainMissionDescription: Get The EXACT score
   SecondaryMissionDescription: 
   ThirdMissionDescription: 
   Scene: Accuracy
+  InitialElement: 0

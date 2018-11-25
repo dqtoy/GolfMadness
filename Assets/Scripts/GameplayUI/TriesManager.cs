@@ -6,14 +6,21 @@ using UnityEngine;
 public class TriesManager
 {
     private int _remainingTries;
-
+    public int MaxTries;
+    
     public Action<int> OnTriesUpdated;
     
-    public void Init(int tries)
+    public void Init(LevelData levelData)
     {
+        if (levelData.DeactivateTries)
+        {
+            return;
+        }
+
         PlayerController.Instance.OnShoot -= OnShoot;
         PlayerController.Instance.OnShoot += OnShoot;
-        _remainingTries = (tries > 0) ? tries : 7;
+        _remainingTries = (levelData.AmountOfTries > 0) ? levelData.AmountOfTries : 7;
+        MaxTries = _remainingTries;
         UpdateElements();
     }
 
@@ -22,6 +29,7 @@ public class TriesManager
         _remainingTries--;
         if (_remainingTries <= 0)
         {
+            SoundManager.Instance.PlayDefat();
             ServicesManager.Instance.UIStackController.Push("UIPrefabs/LosePopup");
 
         }

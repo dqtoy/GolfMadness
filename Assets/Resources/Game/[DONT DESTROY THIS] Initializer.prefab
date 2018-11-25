@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114376188542408016}
   - component: {fileID: 114817774446781966}
   - component: {fileID: 114274403230894040}
+  - component: {fileID: 114496427221534434}
   m_Layer: 0
   m_Name: '[DONT DESTROY THIS] Initializer'
   m_TagString: Untagged
@@ -99,6 +100,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LogicComponents: []
+--- !u!114 &114496427221534434
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218525954087926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779f7c5cdc65a48f48bb6fa477587ca1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PrefabPath: UIPrefabs/BeginPopup
 --- !u!114 &114726524210115740
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -110,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edefbae6ee26412f803d18f675a77c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelData: {fileID: 11400000, guid: 3abfc6a5d91ea46308ad3397963891fb, type: 2}
+  _levelData: {fileID: 11400000, guid: 78d76b544c43c0a4dbad3fd1280ec925, type: 2}
 --- !u!114 &114817774446781966
 MonoBehaviour:
   m_ObjectHideFlags: 1

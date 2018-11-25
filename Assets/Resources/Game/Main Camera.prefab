@@ -51,7 +51,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.8773585, g: 0.67947966, b: 0.43454075, a: 0.5803922}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -101,16 +101,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
-  TargetPositionOffset: {x: 0, y: 2.91, z: 0}
-  CameraPositionOffset: {x: 0, y: 5.34, z: -10.74}
-  MinCameraHeight: 3
-  MaxCameraHeight: 18
-  CameraPositionOffsetMin: {x: 0, y: 0, z: 0}
-  CameraPositionOffsetMax: {x: 0, y: 0, z: 0}
-  lerpValue: 0.74
-  MinSpeed: 0.219
-  CameraRotationSpeed: 9
-  _zoom: 0
-  InitialZoom: 0.15
-  ZoomSpeed: 30
+  TargetPositionOffset: {x: 0, y: 5.16, z: -0.6}
+  CameraPositionOffset: {x: 0, y: 2.02, z: 18.77}
+  CameraRotationSpeed: 6000
+  _zoom: 1
+  InitialZoom: 1
+  ZoomSpeed: 60
   MinScreenPercentageForRotation: {x: 0.003, y: 0.003}
+  _cameraPositionDistanceFromTarget: 9.49
+  _maxThrowOffset: 2.5

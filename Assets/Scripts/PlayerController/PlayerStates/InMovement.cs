@@ -9,6 +9,7 @@ public class InPlayerMovementState : IState
 
     float _timeWithSpeedZero;
 
+    
     public InPlayerMovementState(PlayerController playerController)
     {
         _playerController = playerController;
@@ -18,13 +19,14 @@ public class InPlayerMovementState : IState
     public void Enter()
     {
         _timeWithSpeedZero = 0f;
+        _playerController.OnBallMoving(true);
     }
 
     public void Execute()
     {
         //Debug.Log("SPEED MAGNITUDE " + _playerRigidbody.velocity.magnitude);
         var isSlowVelocity = _playerRigidbody.velocity.magnitude <= _playerController.MinValidMovementSpeed;
-        var isSlowAngularVelocity = _playerRigidbody.angularVelocity.magnitude <= _playerController.MinValidMovementSpeed;
+        var isSlowAngularVelocity = _playerRigidbody.angularVelocity.magnitude <= _playerController.MinValidMovementAngularSpeed;
         
         if(/*isSlowVelocity ||*/ (isSlowAngularVelocity && isSlowVelocity))
         {
@@ -32,7 +34,11 @@ public class InPlayerMovementState : IState
 
             if (_timeWithSpeedZero > 0.1f)
             {
-                _playerController.PlayerStopMoving();
+                if (_playerController.PlayerIsOnFloor())
+                {
+                    _playerController.PlayerStopMoving();
+                }
+
             }
         }
     }
@@ -40,5 +46,10 @@ public class InPlayerMovementState : IState
     public void Exit()
     {
      
+    }
+
+    public string Name()
+    {
+        return "InMovement";
     }
 }

@@ -26,8 +26,20 @@ public class IngameLoader : LogicComponent
         
         var cameraObject = Instantiate(_camera);
         var cameraController = cameraObject.GetComponent<GolfCameraController>();
+
+        var debugMissionLoader = FindObjectOfType<DebugMissionLoader>();
         
         cameraController.Init(playerObject, playerController.GetTrajectoryLine());
-        playerController.Init();
+        playerController.Init(debugMissionLoader._levelData.InitialElement);
+
+
+            
+
+        var elementalObjects = FindObjectsOfType<Elemental>();
+
+        for (int i = 0; i < elementalObjects.Length; i++)
+        {
+            elementalObjects[i].Init();
+        }
     }
 }

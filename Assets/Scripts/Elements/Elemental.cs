@@ -66,6 +66,10 @@ public class Elemental : Collisionable
         return layer;
     }
 
+    public virtual void Init()
+    {
+    }
+
     protected virtual void OnElementChange()
     {
     }

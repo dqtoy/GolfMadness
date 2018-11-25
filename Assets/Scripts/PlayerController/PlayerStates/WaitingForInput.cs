@@ -17,6 +17,7 @@ public class WaitForInput : IState
 
     public void Enter()
     {
+        _playerController.OnBallMoving(false);
         //_playerController.ResetRotation();
         //_playerController.OnInputChangedEvent += OnInputChanged;
     }
@@ -32,4 +33,8 @@ public class WaitForInput : IState
         
     }
 
+    public string Name()
+    {
+        return "WaitingForInput";
+    }
 }

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectiveCollisionableContainer : Elemental
+public class ObjectiveCollisionableContainer : ElementalDebug
 {
+    //[SerializeField] private
     protected override void CollisionableTriggerEnter(Collider other)
     {
         var moveObjective = other.gameObject.GetComponent<MoveObjective>();

@@ -11,7 +11,8 @@ public class EnterObjective : Objective
 
     protected override void CollisionableTriggerEnter(Collider other)
     {
-        if (Collider.isTrigger)
+        var isPlayer = other.gameObject.GetComponent<PlayerController>() != null;
+        if (isPlayer && Collider.isTrigger)
         {
             OnObjectiveUpdated(true, this);
         }
@@ -19,8 +20,10 @@ public class EnterObjective : Objective
 
     protected override void CollisionableCollisionEnter(Collision other)
     {
-        if (!Collider.isTrigger)
+        var isPlayer = other.gameObject.GetComponent<PlayerController>() != null;
+        if (isPlayer && !Collider.isTrigger)
         {
             OnObjectiveUpdated(true, this);
-        }    }
+        }
+    }
 }

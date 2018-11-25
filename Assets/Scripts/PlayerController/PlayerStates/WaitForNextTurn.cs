@@ -13,4 +13,9 @@ public class WaitForNextTurn : MonoBehaviour {
 	void Update () {
 		
 	}
+	
+	public string Name()
+	{
+		return "WaitForNextTurn";
+	}
 }

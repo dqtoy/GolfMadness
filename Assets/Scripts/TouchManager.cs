@@ -33,6 +33,8 @@ public class TouchManager : MonoBehaviour
     private ShootEvent _shootEvent;
     
     private int _touchLayer;
+
+    public bool InputActive = true;
     
     void Start ()
     {
@@ -51,7 +53,11 @@ public class TouchManager : MonoBehaviour
     void Update ()
     {
         //UpdateMobileInput();
-        UpdateDesktopInput();
+        if (InputActive)
+        {
+            UpdateDesktopInput();
+        }
+
         //var ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f));
         //Debug.DrawRay(ray.origin, ray.direction * 20f, Color.magenta, 1f);
     }

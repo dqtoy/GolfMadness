@@ -15,6 +15,9 @@ public class MissionUIController : MonoBehaviour
 
    public void UpdateState(bool completed)
    {
-      _star.SetActive(completed);
+      if (_star != null)
+      {
+         _star.SetActive(completed);
+      }
    }
 }
